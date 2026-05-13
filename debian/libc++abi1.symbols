@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 1:21.1.5 amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 ppc64el riscv64 s390x sparc64 x32
+# SymbolsHelper-Confirmed: 1:22.1 amd64 arm64 armhf i386 loong64 powerpc ppc64 ppc64el riscv64 s390x sparc64 x32
 libc++abi.so.1 #PACKAGE# #MINVER#
  _ZNKSt10bad_typeid4whatEv@Base 1:21.1
  _ZNKSt11logic_error4whatEv@Base 1:21.1
@@ -313,22 +313,10 @@ libc++abi.so.1 #PACKAGE# #MINVER#
  _ZdaPvRKSt9nothrow_t@Base 1:21.1
  _ZdaPvSt11align_val_t@Base 1:21.1
  _ZdaPvSt11align_val_tRKSt9nothrow_t@Base 1:21.1
- (subst)_ZdaPv{size_t}@Base 1:21.1.5
- (subst)_ZdaPv{size_t}St11align_val_t@Base 1:21.1.5
  _ZdlPv@Base 1:21.1
  _ZdlPvRKSt9nothrow_t@Base 1:21.1
  _ZdlPvSt11align_val_t@Base 1:21.1
  _ZdlPvSt11align_val_tRKSt9nothrow_t@Base 1:21.1
- (subst)_ZdlPv{size_t}@Base 1:21.1.5
- (subst)_ZdlPv{size_t}St11align_val_t@Base 1:21.1.5
- (subst)_Zna{size_t}@Base 1:21.1.5
- (subst)_Zna{size_t}RKSt9nothrow_t@Base 1:21.1.5
- (subst)_Zna{size_t}St11align_val_t@Base 1:21.1.5
- (subst)_Zna{size_t}St11align_val_tRKSt9nothrow_t@Base 1:21.1.5
- (subst)_Znw{size_t}@Base 1:21.1.5
- (subst)_Znw{size_t}RKSt9nothrow_t@Base 1:21.1.5
- (subst)_Znw{size_t}St11align_val_t@Base 1:21.1.5
- (subst)_Znw{size_t}St11align_val_tRKSt9nothrow_t@Base 1:21.1.5
  __cxa_allocate_dependent_exception@Base 1:21.1
  __cxa_allocate_exception@Base 1:21.1
  __cxa_bad_cast@Base 1:21.1

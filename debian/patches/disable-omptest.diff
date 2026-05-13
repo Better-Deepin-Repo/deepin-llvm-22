@@ -1,8 +1,8 @@
-Index: llvm-project/openmp/tools/omptest/CMakeLists.txt
+Index: llvm-toolchain-22_22.1.1~++20260306121709+e693f0fe6390/openmp/tools/omptest/CMakeLists.txt
 ===================================================================
---- llvm-project.orig/openmp/tools/omptest/CMakeLists.txt
-+++ llvm-project/openmp/tools/omptest/CMakeLists.txt
-@@ -16,9 +16,9 @@ option(LIBOMPTEST_INSTALL_COMPONENTS
+--- llvm-toolchain-22_22.1.1~++20260306121709+e693f0fe6390.orig/openmp/tools/omptest/CMakeLists.txt
++++ llvm-toolchain-22_22.1.1~++20260306121709+e693f0fe6390/openmp/tools/omptest/CMakeLists.txt
+@@ -15,9 +15,9 @@ option(LIBOMPTEST_INSTALL_COMPONENTS
         "Install ompTest library, headers and package files." OFF)
  
  # Exit early if OMPT support or LLVM-tests were disabled by the user.
@@ -12,5 +12,5 @@ Index: llvm-project/openmp/tools/omptest/CMakeLists.txt
 -endif()
 +#endif()
  
- include(CMakePackageConfigHelpers)
- 
+ # Only support OpenMP runtime 'bootstrap' build mode.
+ # Check as seen in 'runtimes/CMakeLists.txt', due to passing HAVE_LLVM_LIT to

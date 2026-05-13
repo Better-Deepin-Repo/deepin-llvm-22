@@ -50,6 +50,7 @@ clangd-atomic-cmake.patch
 remove-apple-clang-manpage.diff
 0049-Use-Debian-provided-MathJax-everywhere.patch
 hurd/hurd-pathmax.diff
+hurd/hurd_orc_pathmax.diff
 930008-arm.diff
 bootstrap-fix-include-next.diff
 python3-shebang.patch
@@ -64,6 +65,7 @@ llvm-runtimes-builtins-build-check.diff
 issue-54242.diff
 compiler-rt/compilerrt-builtins-arch-fix-armhf.diff
 compiler-rt/compilerrt-build-scudo-standalone-option.diff
+compiler-rt/emutls-win32-winnt-vista.diff
 wasm/wasm-ld-path.diff
 wasm/wasm-compiler-rt-default.diff
 wasm/wasm-sysroot-usr.diff

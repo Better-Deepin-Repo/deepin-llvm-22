@@ -19,7 +19,7 @@ cd "$AUTOPKGTEST_TMP"
 
 mkdir build
 cd build
-cmake -DLIT=/usr/lib/llvm-$LLVM_VERSION/build/utils/lit/lit.py \
+cmake -DLIT=/usr/bin/lit-$LLVM_VERSION \
         -DCLANG_BINARY=/usr/bin/clang-$LLVM_VERSION \
         -DCLANGXX_BINARY=/usr/bin/clang++-$LLVM_VERSION \
         -DCLANG_TIDY_BINARY=/usr/bin/clang-tidy-$LLVM_VERSION \

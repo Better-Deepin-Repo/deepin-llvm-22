@@ -24060,8 +24060,17 @@ SDValue DAGCombiner::visitINSERT_VECTOR_ELT(SDNode *N) {
           // Build the mask and return the corresponding DAG node.
           auto BuildMaskAndNode = [&](SDValue TrueVal, SDValue FalseVal,
                                       unsigned MaskOpcode) {
-            for (unsigned I = 0; I != NumElts; ++I)
+            APInt InsertedEltMask = APInt::getZero(NumElts);
+            for (unsigned I = 0; I != NumElts; ++I) {
               Mask[I] = Ops[I] ? TrueVal : FalseVal;
+              if (Ops[I])
+                InsertedEltMask.setBit(I);
+            }
+            // Make sure to freeze the source vector in case any of the elements
+            // overwritten by the insert may be poison. Otherwise those elements
+            // could end up being poison instead of 0/-1 after the AND/OR.
+            CurVec =
+                DAG.getFreeze(CurVec, InsertedEltMask, /*PoisonOnly=*/true);
             return DAG.getNode(MaskOpcode, DL, VT, CurVec,
                                DAG.getBuildVector(VT, DL, Mask));
           };
@@ -26059,9 +26068,11 @@ SDValue DAGCombiner::visitCONCAT_VECTORS(SDNode *N) {
       // If the bitcast type isn't legal, it might be a trunc of a legal type;
       // look through the trunc so we can still do the transform:
       //   concat_vectors(trunc(scalar), undef) -> scalar_to_vector(scalar)
+      // However, this is only equivalent on little-endian targets.
       if (Scalar->getOpcode() == ISD::TRUNCATE &&
           !TLI.isTypeLegal(Scalar.getValueType()) &&
-          TLI.isTypeLegal(Scalar->getOperand(0).getValueType()))
+          TLI.isTypeLegal(Scalar->getOperand(0).getValueType()) &&
+          DAG.getDataLayout().isLittleEndian())
         Scalar = Scalar->getOperand(0);
 
       EVT SclTy = Scalar.getValueType();

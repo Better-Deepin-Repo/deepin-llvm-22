@@ -1,3 +1,117 @@
+llvm-toolchain-22 (1:22.1.5-1) unstable; urgency=medium
+
+  * New upstream release
+  * d/rules: Fail the build if debian/control is regenerated, except for
+    apt.llvm.org snapshot builds where the substitutions legitimately
+    differ between snapshots. Modifying debian/control during the build
+    is forbidden by Debian policy and breaks reproducibility.
+    (Closes: #1130335)
+  * d/rules, d/control.in: Replace the post-substitution sed that rewrote
+    the libc++/libomp/libunwind move version cap on apt.llvm.org snapshot
+    builds with a @LIBCXX_MOVE_VERSION@ placeholder substituted in the
+    same loop as the other variables. Removes one more in-build mutation
+    of debian/control.
+  * d/rules: Extend the regenerate-vs-fail check to debian/watch,
+    debian/packages.ocaml and debian/packages.libclc. These three files
+    are also tracked in git, kept by override_dh_auto_clean and rewritten
+    in place by the substitution loop, so they have the same drift risk
+    as debian/control.
+  * d/source-integrity.mk: Move the source-package integrity logic
+    (APT_LLVM_ORG, GENERATED_TRACKED_FILES and the snapshot/verify canned
+    recipes) into a dedicated include file. Keeps debian/rules focused on
+    the build itself.
+  * d/tests.mk: Move the override_dh_auto_test definition (the whole
+    ifeq RUN_TEST block, ARCH_LLVM_TEST_OK and the lcov coverage tail)
+    into a dedicated include file. Pure relocation, no behavioural
+    change.
+  * d/build-wasm-mingw.mk: Move the wasm32/wasm64 + mingw-w64
+    compiler-rt and libcxx pattern rules, the STAGE_2_WASM_C(XX)FLAGS
+    filters and the stamps/debian-{wasm,mingw}-build aggregators into a
+    dedicated include file. Pure relocation, no behavioural change.
+  * Fix the autopkgtest for Polly. Thanks to Adrian Bunk for the fix
+    (Closes: #1130893)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 05 May 2026 00:00:00 +0200
+
+llvm-toolchain-22 (1:22.1.4-1) unstable; urgency=medium
+
+  [ Samuel Thibault ]
+  * d/patches/hurd/hurd_orc_pathmax.diff: Update to version that does not need
+    sys::fs::readlink.
+  * patches/fix-readlink-not-in-fs-namespace.diff: Drop
+
+  [ Matthias Klose ]
+  * d/rules, d/python3-lldb-X.Y.links.in: Fix location for extension.
+
+  [ Sylvestre Ledru ]
+  * New upstream release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 21 Apr 2026 23:39:53 +0200
+
+llvm-toolchain-22 (1:22.1.3-1) unstable; urgency=medium
+
+  [ Samuel Thibault ]
+  * d/patches/hurd/hurd_orc_pathmax.diff: Fix GNU/Hurd build.
+
+  [ Sylvestre Ledru ]
+  * new upstream release
+  * patches/fix-readlink-not-in-fs-namespace.diff:
+    Fix build issue #190659
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 09 Apr 2026 11:29:37 +0200
+
+llvm-toolchain-22 (1:22.1.2-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 29 Mar 2026 18:58:38 +0200
+
+llvm-toolchain-22 (1:22.1.1-1) unstable; urgency=medium
+
+  [ Matthias Klose ]
+  * d/rules: Only disable Z3 support for Ubuntu when it is in main.
+  * Install a lit binary. Addresses: #1122910.
+  * llvm-tools: Don't install the lit tests. Addresses: #1122909.
+  * d/rules: For Ubuntu, don't include i386 for CLANG_GRPC_ARCHS,
+    not built on i386.
+  * Update libc++1, libc++abi1 and libomp5 symbols files.
+  * d/rules: Stop ignoring failure for dh_shlibdeps call.
+
+  [ Sylvestre Ledru ]
+  * New upstream release
+  * Add hello fallback for lld build dependency. For bullseye and jammy
+    s390x backport in particular
+  * Fix autopkgtests for Polly: Update to use LLVM 22's new pass manager
+    syntax (-passes=polly-canonicalize instead of -polly-canonicalize).
+    (Closes: #1130893)
+  * Adjust the path to lit
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 17 Mar 2026 21:30:24 +0100
+
+llvm-toolchain-22 (1:22.1.0-2) unstable; urgency=medium
+
+  [ Matthias Klose ]
+  * d/rules: Don't use lld for backport build, when not available.
+  * d/rules: Add safety check for enablement of the RVA23 baseline.
+
+  [ Sylvestre Ledru ]
+  * lldb: support global config file, thanks to Nobert Lange
+  * Don't fallback to llvm-spirv-(N-1) when llvm-spirv-N isn't available.
+    LLVM 22 bitcode contains new attributes that llvm-spirv-21 can't read,
+    causing libclc build failures on full builds (not -B/binary-arch since
+    libclc is arch=all):
+    "Unknown attribute kind (105) (Producer: 'LLVM22.1.0' Reader: 'LLVM 21.1.8')"
+    Update build-dep to llvm-spirv-22.
+    (Closes: #1128822)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 25 Feb 2026 19:51:52 +0100
+
+llvm-toolchain-22 (1:22.1.0-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 24 Feb 2026 10:16:57 +0100
+
 llvm-toolchain-22 (1:22.1.0~+rc3-1~exp1) experimental; urgency=medium
 
   [ Matthias Klose ]

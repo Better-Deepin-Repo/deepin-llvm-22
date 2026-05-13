@@ -132,6 +132,11 @@ static __inline void emutls_unlock(void) { pthread_mutex_unlock(&emutls_mutex); 
 #else // _WIN32
 
 #include <assert.h>
+// InitOnceExecuteOnce requires _WIN32_WINNT >= 0x0600 (Vista). mingw-w64
+// defaults to 0x0502, so ensure the minimum version is set before windows.h.
+#if !defined(_WIN32_WINNT) || _WIN32_WINNT < 0x0600
+#define _WIN32_WINNT 0x0600
+#endif
 #include <malloc.h>
 #include <stdio.h>
 #include <windows.h>

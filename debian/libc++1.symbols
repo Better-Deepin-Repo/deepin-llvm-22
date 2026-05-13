@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 1:21.1.5 amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 ppc64el riscv64 s390x sparc64 x32
+# SymbolsHelper-Confirmed: 1:22.1 amd64 arm64 armhf i386 loong64 powerpc ppc64 ppc64el riscv64 s390x sparc64 x32
 libc++.so.1 #PACKAGE# #MINVER#
  _ZNKSt12bad_any_cast4whatEv@Base 1:21.1
  _ZNKSt12experimental15fundamentals_v112bad_any_cast4whatEv@Base 1:21.1
@@ -45,34 +45,8 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNKSt3__110moneypunctIwLb1EE16do_positive_signEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__110moneypunctIwLb1EE16do_thousands_sepEv@Base 1:21.1
  _ZNKSt3__112bad_weak_ptr4whatEv@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE12find_last_ofEPKc{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE13find_first_ofEPKc{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE16find_last_not_ofEPKc{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE17find_first_not_ofEPKc{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE2atE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4copyEPc{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findEPKc{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4findEc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5rfindEPKc{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5rfindEc{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7compareEPKc@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7compareE{size_t}{size_t}PKc@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7compareE{size_t}{size_t}PKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7compareE{size_t}{size_t}RKS5_{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE12find_last_ofEPKw{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE13find_first_ofEPKw{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE16find_last_not_ofEPKw{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE17find_first_not_ofEPKw{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE2atE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE4copyEPw{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE4findEPKw{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE4findEw{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE5rfindEPKw{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE5rfindEw{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE7compareEPKw@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE7compareE{size_t}{size_t}PKw@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE7compareE{size_t}{size_t}PKw{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE7compareE{size_t}{size_t}RKS5_{size_t}{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__112ctype_bynameIcE10do_tolowerEPcPKc@Base 1:21.1
  (optional=templinst)_ZNKSt3__112ctype_bynameIcE10do_tolowerEc@Base 1:21.1
  (optional=templinst)_ZNKSt3__112ctype_bynameIcE10do_toupperEPcPKc@Base 1:21.1
@@ -97,21 +71,18 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IDiE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IDiE5do_inER11__mbstate_tPKcS5_RS5_PDiS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IDiE6do_outER11__mbstate_tPKDiS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__114__codecvt_utf8IDiE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IDsE10do_unshiftER11__mbstate_tPcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IDsE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IDsE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IDsE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IDsE5do_inER11__mbstate_tPKcS5_RS5_PDsS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IDsE6do_outER11__mbstate_tPKDsS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__114__codecvt_utf8IDsE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IwE10do_unshiftER11__mbstate_tPcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IwE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IwE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IwE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IwE5do_inER11__mbstate_tPKcS5_RS5_PwS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__114__codecvt_utf8IwE6do_outER11__mbstate_tPKwS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__114__codecvt_utf8IwE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__114collate_bynameIcE10do_compareEPKcS3_S3_S3_@Base 1:21.1
  (optional=templinst)_ZNKSt3__114collate_bynameIcE12do_transformEPKcS3_@Base 1:21.1
  (optional=templinst)_ZNKSt3__114collate_bynameIwE10do_compareEPKwS3_S3_S3_@Base 1:21.1
@@ -125,42 +96,36 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDiLb0EE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDiLb0EE5do_inER11__mbstate_tPKcS5_RS5_PDiS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDiLb0EE6do_outER11__mbstate_tPKDiS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__115__codecvt_utf16IDiLb0EE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDiLb1EE10do_unshiftER11__mbstate_tPcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDiLb1EE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDiLb1EE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDiLb1EE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDiLb1EE5do_inER11__mbstate_tPKcS5_RS5_PDiS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDiLb1EE6do_outER11__mbstate_tPKDiS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__115__codecvt_utf16IDiLb1EE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb0EE10do_unshiftER11__mbstate_tPcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb0EE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb0EE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb0EE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb0EE5do_inER11__mbstate_tPKcS5_RS5_PDsS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb0EE6do_outER11__mbstate_tPKDsS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__115__codecvt_utf16IDsLb0EE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb1EE10do_unshiftER11__mbstate_tPcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb1EE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb1EE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb1EE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb1EE5do_inER11__mbstate_tPKcS5_RS5_PDsS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IDsLb1EE6do_outER11__mbstate_tPKDsS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__115__codecvt_utf16IDsLb1EE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb0EE10do_unshiftER11__mbstate_tPcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb0EE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb0EE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb0EE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb0EE5do_inER11__mbstate_tPKcS5_RS5_PwS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb0EE6do_outER11__mbstate_tPKwS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__115__codecvt_utf16IwLb0EE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb1EE10do_unshiftER11__mbstate_tPcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb1EE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb1EE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb1EE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb1EE5do_inER11__mbstate_tPKcS5_RS5_PwS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__115__codecvt_utf16IwLb1EE6do_outER11__mbstate_tPKwS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__115__codecvt_utf16IwLb1EE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__115basic_streambufIcNS_11char_traitsIcEEE6getlocEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115basic_streambufIwNS_11char_traitsIwEEE6getlocEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__115basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEE3strEv@Base 1:21.1
@@ -212,21 +177,18 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IDiE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IDiE5do_inER11__mbstate_tPKcS5_RS5_PDiS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IDiE6do_outER11__mbstate_tPKDiS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__120__codecvt_utf8_utf16IDiE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IDsE10do_unshiftER11__mbstate_tPcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IDsE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IDsE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IDsE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IDsE5do_inER11__mbstate_tPKcS5_RS5_PDsS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IDsE6do_outER11__mbstate_tPKDsS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__120__codecvt_utf8_utf16IDsE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IwE10do_unshiftER11__mbstate_tPcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IwE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IwE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IwE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IwE5do_inER11__mbstate_tPKcS5_RS5_PwS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__codecvt_utf8_utf16IwE6do_outER11__mbstate_tPKwS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__120__codecvt_utf8_utf16IwE9do_lengthER11__mbstate_tPKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__120__time_get_c_storageIcE3__XEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__time_get_c_storageIcE3__cEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__120__time_get_c_storageIcE3__rEv@Base 1:21.1
@@ -248,7 +210,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNKSt3__123__match_any_but_newlineIcE6__execERNS_7__stateIcEE@Base 1:21.1
  (optional=templinst)_ZNKSt3__123__match_any_but_newlineIwE6__execERNS_7__stateIwEE@Base 1:21.1
  _ZNKSt3__13pmr26synchronized_pool_resource11do_is_equalERKNS0_15memory_resourceE@Base 1:21.1
- (subst)_ZNKSt3__13pmr28unsynchronized_pool_resource12__pool_indexE{size_t}{size_t}@Base 1:21.1.5
  _ZNKSt3__13pmr28unsynchronized_pool_resource17__pool_block_sizeEi@Base 1:21.1
  _ZNKSt3__13pmr28unsynchronized_pool_resource22__log2_pool_block_sizeEi@Base 1:21.1
  _ZNKSt3__13pmr28unsynchronized_pool_resource7optionsEv@Base 1:21.1
@@ -299,42 +260,36 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNKSt3__17codecvtIDiDu11__mbstate_tE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDiDu11__mbstate_tE5do_inERS1_PKDuS5_RS5_PDiS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDiDu11__mbstate_tE6do_outERS1_PKDiS5_RS5_PDuS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__17codecvtIDiDu11__mbstate_tE9do_lengthERS1_PKDuS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__17codecvtIDic11__mbstate_tE10do_unshiftERS1_PcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDic11__mbstate_tE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDic11__mbstate_tE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDic11__mbstate_tE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDic11__mbstate_tE5do_inERS1_PKcS5_RS5_PDiS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDic11__mbstate_tE6do_outERS1_PKDiS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__17codecvtIDic11__mbstate_tE9do_lengthERS1_PKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__17codecvtIDsDu11__mbstate_tE10do_unshiftERS1_PDuS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsDu11__mbstate_tE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsDu11__mbstate_tE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsDu11__mbstate_tE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsDu11__mbstate_tE5do_inERS1_PKDuS5_RS5_PDsS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsDu11__mbstate_tE6do_outERS1_PKDsS5_RS5_PDuS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__17codecvtIDsDu11__mbstate_tE9do_lengthERS1_PKDuS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__17codecvtIDsc11__mbstate_tE10do_unshiftERS1_PcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsc11__mbstate_tE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsc11__mbstate_tE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsc11__mbstate_tE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsc11__mbstate_tE5do_inERS1_PKcS5_RS5_PDsS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIDsc11__mbstate_tE6do_outERS1_PKDsS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__17codecvtIDsc11__mbstate_tE9do_lengthERS1_PKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__17codecvtIcc11__mbstate_tE10do_unshiftERS1_PcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIcc11__mbstate_tE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIcc11__mbstate_tE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIcc11__mbstate_tE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIcc11__mbstate_tE5do_inERS1_PKcS5_RS5_PcS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIcc11__mbstate_tE6do_outERS1_PKcS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__17codecvtIcc11__mbstate_tE9do_lengthERS1_PKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__17codecvtIwc11__mbstate_tE10do_unshiftERS1_PcS4_RS4_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIwc11__mbstate_tE11do_encodingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIwc11__mbstate_tE13do_max_lengthEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIwc11__mbstate_tE16do_always_noconvEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIwc11__mbstate_tE5do_inERS1_PKcS5_RS5_PwS7_RS7_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17codecvtIwc11__mbstate_tE6do_outERS1_PKwS5_RS5_PcS7_RS7_@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__17codecvtIwc11__mbstate_tE9do_lengthERS1_PKcS5_{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__17collateIcE10do_compareEPKcS3_S3_S3_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17collateIcE12do_transformEPKcS3_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17collateIcE7do_hashEPKcS3_@Base 1:21.1
@@ -351,7 +306,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst|arch=ppc64el)_ZNKSt3__17num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRu9__ieee128@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRx@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjRy@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNKSt3__17num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjR{long_double}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__17num_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_RNS_8ios_baseERjS8_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRPv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRb@Base 1:21.1
@@ -363,7 +317,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst|arch=ppc64el)_ZNKSt3__17num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRu9__ieee128@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRx@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjRy@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNKSt3__17num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjR{long_double}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__17num_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_RNS_8ios_baseERjS8_@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcPKv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcb@Base 1:21.1
@@ -373,7 +326,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst|arch=ppc64el)_ZNKSt3__17num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcu9__ieee128@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcx@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEcy@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNKSt3__17num_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_RNS_8ios_baseEc{long_double}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__17num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwPKv@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwb@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwd@Base 1:21.1
@@ -382,14 +334,9 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst|arch=ppc64el)_ZNKSt3__17num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwu9__ieee128@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwx@Base 1:21.1
  (optional=templinst)_ZNKSt3__17num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwy@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNKSt3__17num_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEw{long_double}@Base 1:21.1.5
  _ZNKSt3__18ios_base6getlocEv@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__18messagesIcE6do_getE{ssize_t}iiRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__18messagesIcE7do_openERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_6localeE@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__18messagesIcE8do_closeE{ssize_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNKSt3__18messagesIwE6do_getE{ssize_t}iiRKNS_12basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEE@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__18messagesIwE7do_openERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERKNS_6localeE@Base 1:21.1
- (optional=templinst|subst)_ZNKSt3__18messagesIwE8do_closeE{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__18numpunctIcE11do_groupingEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__18numpunctIcE11do_truenameEv@Base 1:21.1
  (optional=templinst)_ZNKSt3__18numpunctIcE12do_falsenameEv@Base 1:21.1
@@ -452,16 +399,12 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNKSt3__18time_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_RNS_8ios_baseEwPK2tmcc@Base 1:21.1
  (optional=templinst)_ZNKSt3__19money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_bRNS_8ios_baseERjRNS_12basic_stringIcS3_NS_9allocatorIcEEEE@Base 1:21.1
  (optional=templinst|arch=ppc64el)_ZNKSt3__19money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_bRNS_8ios_baseERjRu9__ieee128@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNKSt3__19money_getIcNS_19istreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_getES4_S4_bRNS_8ios_baseERjR{long_double}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__19money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_bRNS_8ios_baseERjRNS_12basic_stringIwS3_NS_9allocatorIwEEEE@Base 1:21.1
  (optional=templinst|arch=ppc64el)_ZNKSt3__19money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_bRNS_8ios_baseERjRu9__ieee128@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNKSt3__19money_getIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_getES4_S4_bRNS_8ios_baseERjR{long_double}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__19money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_bRNS_8ios_baseEcRKNS_12basic_stringIcS3_NS_9allocatorIcEEEE@Base 1:21.1
  (optional=templinst|arch=ppc64el)_ZNKSt3__19money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_bRNS_8ios_baseEcu9__ieee128@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNKSt3__19money_putIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEE6do_putES4_bRNS_8ios_baseEc{long_double}@Base 1:21.1.5
  (optional=templinst)_ZNKSt3__19money_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_bRNS_8ios_baseEwRKNS_12basic_stringIwS3_NS_9allocatorIwEEEE@Base 1:21.1
  (optional=templinst|arch=ppc64el)_ZNKSt3__19money_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_bRNS_8ios_baseEwu9__ieee128@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNKSt3__19money_putIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEE6do_putES4_bRNS_8ios_baseEw{long_double}@Base 1:21.1.5
  _ZNSt11logic_errorC1EPKc@Base 1:21.1
  _ZNSt11logic_errorC1ERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE@Base 1:21.1
  _ZNSt11logic_errorC1ERKS_@Base 1:21.1
@@ -540,7 +483,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (arch=ppc64el)_ZNSt3__110to_wstringEu9__ieee128@Base 1:21.1
  _ZNSt3__110to_wstringEx@Base 1:21.1
  _ZNSt3__110to_wstringEy@Base 1:21.1
- (arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__110to_wstringE{long_double}@Base 1:21.1.5
  _ZNSt3__111__call_onceERVmPvPFvS2_E@Base 1:21.1
  (optional=templinst)_ZNSt3__111__money_getIcE13__gather_infoEbRKNS_6localeERNS_10money_base7patternERcS8_RNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEESF_SF_SF_Ri@Base 1:21.1
  (optional=templinst)_ZNSt3__111__money_getIwE13__gather_infoEbRKNS_6localeERNS_10money_base7patternERwS8_RNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEERNS9_IwNSA_IwEENSC_IwEEEESJ_SJ_Ri@Base 1:21.1
@@ -553,7 +495,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__111regex_errorD0Ev@Base 1:21.1
  _ZNSt3__111regex_errorD1Ev@Base 1:21.1
  _ZNSt3__111regex_errorD2Ev@Base 1:21.1
- (subst)_ZNSt3__111this_thread9sleep_forERKNS_6chrono8durationIxNS_5ratioIL{int64_t}1EL{int64_t}1000000000EEEEE@Base 1:21.1.5
  _ZNSt3__111timed_mutex4lockEv@Base 1:21.1
  _ZNSt3__111timed_mutex6unlockEv@Base 1:21.1
  _ZNSt3__111timed_mutex8try_lockEv@Base 1:21.1
@@ -563,7 +504,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__111timed_mutexD2Ev@Base 1:21.1
  _ZNSt3__112__do_nothingEPv@Base 1:21.1
  _ZNSt3__112__get_sp_mutEPKv@Base 1:21.1
- (subst)_ZNSt3__112__next_primeE{size_t}@Base 1:21.1.5
  _ZNSt3__112__rs_default4__c_E@Base 1:21.1
  _ZNSt3__112__rs_defaultC1ERKS0_@Base 1:21.1
  _ZNSt3__112__rs_defaultC1Ev@Base 1:21.1
@@ -575,93 +515,35 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__112bad_weak_ptrD0Ev@Base 1:21.1
  _ZNSt3__112bad_weak_ptrD1Ev@Base 1:21.1
  _ZNSt3__112bad_weak_ptrD2Ev@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceE{size_t}{size_t}{size_t}{size_t}{size_t}{size_t}PKc@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE2atE{size_t}@Base 1:21.1.5
  _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4nposE@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5eraseE{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initEPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initEPKc{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initE{size_t}c@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKc@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendERKS5_{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendE{size_t}c@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6assignEPKc@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6assignEPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6assignERKS5_{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6assignE{size_t}c@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6insertENS_11__wrap_iterIPKcEEc@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6insertE{size_t}PKc@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6insertE{size_t}PKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6insertE{size_t}RKS5_{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6insertE{size_t}{size_t}c@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6resizeE{size_t}c@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7replaceE{size_t}{size_t}PKc@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7replaceE{size_t}{size_t}PKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7replaceE{size_t}{size_t}RKS5_{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7replaceE{size_t}{size_t}{size_t}c@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE9__grow_byE{size_t}{size_t}{size_t}{size_t}{size_t}{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE9push_backEc@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_RKS4_@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_{size_t}{size_t}RKS4_@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_RKS4_@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_{size_t}{size_t}RKS4_@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSEc@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE21__grow_by_and_replaceE{size_t}{size_t}{size_t}{size_t}{size_t}{size_t}PKw@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE2atE{size_t}@Base 1:21.1.5
  _ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE4nposE@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE5eraseE{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6__initEPKw{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6__initEPKw{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6__initE{size_t}w@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6appendEPKw@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6appendEPKw{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6appendERKS5_{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6appendE{size_t}w@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6assignEPKw@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6assignEPKw{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6assignERKS5_{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6assignE{size_t}w@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6insertENS_11__wrap_iterIPKwEEw@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6insertE{size_t}PKw@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6insertE{size_t}PKw{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6insertE{size_t}RKS5_{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6insertE{size_t}{size_t}w@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE6resizeE{size_t}w@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE7replaceE{size_t}{size_t}PKw@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE7replaceE{size_t}{size_t}PKw{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE7replaceE{size_t}{size_t}RKS5_{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE7replaceE{size_t}{size_t}{size_t}w@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE7reserveE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE9__grow_byE{size_t}{size_t}{size_t}{size_t}{size_t}{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE9push_backEw@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEC1ERKS5_@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEC1ERKS5_RKS4_@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEC1ERKS5_{size_t}{size_t}RKS4_@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEC2ERKS5_@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEC2ERKS5_RKS4_@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEC2ERKS5_{size_t}{size_t}RKS4_@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEED2Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEaSERKS5_@Base 1:21.1
  (optional=templinst)_ZNSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEaSEw@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112ctype_bynameIcEC1EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112ctype_bynameIcEC1ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112ctype_bynameIcEC2EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112ctype_bynameIcEC2ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112ctype_bynameIcED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__112ctype_bynameIcED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__112ctype_bynameIcED2Ev@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__112ctype_bynameIwEC1EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112ctype_bynameIwEC1ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112ctype_bynameIwEC2EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__112ctype_bynameIwEC2ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__112ctype_bynameIwED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__112ctype_bynameIwED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__112ctype_bynameIwED2Ev@Base 1:21.1
@@ -682,29 +564,12 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__112placeholders3_10E@Base 1:21.1
  _ZNSt3__112strstreambuf3strEv@Base 1:21.1
  _ZNSt3__112strstreambuf4swapERS0_@Base 1:21.1
- (subst)_ZNSt3__112strstreambuf6__initEPc{ssize_t}S1_@Base 1:21.1.5
  _ZNSt3__112strstreambuf6freezeEb@Base 1:21.1
  _ZNSt3__112strstreambuf7seekoffExNS_8ios_base7seekdirEj@Base 1:21.1
  _ZNSt3__112strstreambuf7seekposENS_4fposI11__mbstate_tEEj@Base 1:21.1
  _ZNSt3__112strstreambuf8overflowEi@Base 1:21.1
  _ZNSt3__112strstreambuf9pbackfailEi@Base 1:21.1
  _ZNSt3__112strstreambuf9underflowEv@Base 1:21.1
- (subst)_ZNSt3__112strstreambufC1EPFPv{size_t}EPFvS1_E@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC1EPKa{ssize_t}@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC1EPKc{ssize_t}@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC1EPKh{ssize_t}@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC1EPa{ssize_t}S1_@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC1EPc{ssize_t}S1_@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC1EPh{ssize_t}S1_@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC1E{ssize_t}@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC2EPFPv{size_t}EPFvS1_E@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC2EPKa{ssize_t}@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC2EPKc{ssize_t}@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC2EPKh{ssize_t}@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC2EPa{ssize_t}S1_@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC2EPc{ssize_t}S1_@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC2EPh{ssize_t}S1_@Base 1:21.1.5
- (subst)_ZNSt3__112strstreambufC2E{ssize_t}@Base 1:21.1.5
  _ZNSt3__112strstreambufD0Ev@Base 1:21.1
  _ZNSt3__112strstreambufD1Ev@Base 1:21.1
  _ZNSt3__112strstreambufD2Ev@Base 1:21.1
@@ -723,7 +588,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__112system_errorD0Ev@Base 1:21.1
  _ZNSt3__112system_errorD1Ev@Base 1:21.1
  _ZNSt3__112system_errorD2Ev@Base 1:21.1
- (subst)_ZNSt3__113__hash_memoryEPKv{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE11__read_modeEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE12__write_modeEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE4openEPKcj@Base 1:21.1
@@ -731,7 +595,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE4syncEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE5closeEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE5imbueERKNS_6localeE@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE6setbufEPc{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE7seekoffExNS_8ios_base7seekdirEj@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE7seekposENS_4fposI11__mbstate_tEEj@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEE8overflowEi@Base 1:21.1
@@ -744,27 +607,20 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_filebufIcNS_11char_traitsIcEEED2Ev@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE3getEPc{ssize_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE3getEPc{ssize_t}c@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE3getERNS_15basic_streambufIcS2_EE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE3getERNS_15basic_streambufIcS2_EEc@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE3getERc@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE3getEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE4peekEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE4readEPc{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE4swapERS3_@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE4syncEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE5seekgENS_4fposI11__mbstate_tEE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE5seekgExNS_8ios_base7seekdirE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE5tellgEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE5ungetEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE6ignoreE{ssize_t}i@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE6sentryC1ERS3_b@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE6sentryC2ERS3_b@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE7getlineEPc{ssize_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE7getlineEPc{ssize_t}c@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE7putbackEc@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEE8readsomeEPc{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEEC1EPNS_15basic_streambufIcS2_EE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEEC2EPNS_15basic_streambufIcS2_EE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEED0Ev@Base 1:21.1
@@ -787,15 +643,11 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst|arch=ppc64el)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEErsERu9__ieee128@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEErsERx@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEErsERy@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__113basic_istreamIcNS_11char_traitsIcEEErsER{long_double}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE3getEPw{ssize_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE3getEPw{ssize_t}w@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE3getERNS_15basic_streambufIwS2_EE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE3getERNS_15basic_streambufIwS2_EEw@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE3getERw@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE3getEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE4peekEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE4readEPw{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE4swapERS3_@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE4syncEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE5seekgENS_4fposI11__mbstate_tEE@Base 1:21.1
@@ -803,13 +655,9 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE5tellgEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE5ungetEv@Base 1:21.1
  (optional=templinst|arch=hurd-i386)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE6ignoreEii@Base 1:21.1.5
- (optional=templinst|arch=amd64 arm64 armhf i386 loong64 powerpc ppc64 ppc64el riscv64 s390x sparc64 x32|subst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE6ignoreE{ssize_t}j@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE6sentryC1ERS3_b@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE6sentryC2ERS3_b@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE7getlineEPw{ssize_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE7getlineEPw{ssize_t}w@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE7putbackEw@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEE8readsomeEPw{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEEC1EPNS_15basic_streambufIwS2_EE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEEC2EPNS_15basic_streambufIwS2_EE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEED0Ev@Base 1:21.1
@@ -832,14 +680,12 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst|arch=ppc64el)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEErsERu9__ieee128@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEErsERx@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEErsERy@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__113basic_istreamIwNS_11char_traitsIwEEErsER{long_double}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE3putEc@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE4swapERS3_@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE5flushEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE5seekpENS_4fposI11__mbstate_tEE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE5seekpExNS_8ios_base7seekdirE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE5tellpEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE5writeEPKc{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE6sentryC1ERS3_@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE6sentryC2ERS3_@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEE6sentryD1Ev@Base 1:21.1
@@ -866,14 +712,12 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst|arch=ppc64el)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEElsEu9__ieee128@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEElsEx@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEElsEy@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__113basic_ostreamIcNS_11char_traitsIcEEElsE{long_double}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE3putEw@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE4swapERS3_@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE5flushEv@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE5seekpENS_4fposI11__mbstate_tEE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE5seekpExNS_8ios_base7seekdirE@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE5tellpEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE5writeEPKw{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE6sentryC1ERS3_@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE6sentryC2ERS3_@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEE6sentryD1Ev@Base 1:21.1
@@ -900,7 +744,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst|arch=ppc64el)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEElsEu9__ieee128@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEElsEx@Base 1:21.1
  (optional=templinst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEElsEy@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__113basic_ostreamIwNS_11char_traitsIwEEElsE{long_double}@Base 1:21.1.5
  _ZNSt3__113random_deviceC1ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE@Base 1:21.1
  _ZNSt3__113random_deviceC2ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE@Base 1:21.1
  _ZNSt3__113random_deviceD1Ev@Base 1:21.1
@@ -947,17 +790,9 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__114codecvt_bynameIwc11__mbstate_tED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__114codecvt_bynameIwc11__mbstate_tED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__114codecvt_bynameIwc11__mbstate_tED2Ev@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__114collate_bynameIcEC1EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__114collate_bynameIcEC1ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__114collate_bynameIcEC2EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__114collate_bynameIcEC2ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__114collate_bynameIcED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__114collate_bynameIcED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__114collate_bynameIcED2Ev@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__114collate_bynameIwEC1EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__114collate_bynameIwEC1ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__114collate_bynameIwEC2EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__114collate_bynameIwEC2ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__114collate_bynameIwED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__114collate_bynameIwED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__114collate_bynameIwED2Ev@Base 1:21.1
@@ -982,15 +817,10 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE5imbueERKNS_6localeE@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE5pbumpEi@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE5sgetcEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE5sgetnEPc{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE5sputcEc@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE5sputnEPKc{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE5uflowEv@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE6sbumpcEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE6setbufEPc{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE6snextcEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE6xsgetnEPc{ssize_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE6xsputnEPKc{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE7pubsyncEv@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE7seekoffExNS_8ios_base7seekdirEj@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE7seekposENS_4fposI11__mbstate_tEEj@Base 1:21.1
@@ -999,7 +829,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE8overflowEi@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE8pubimbueERKNS_6localeE@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE9pbackfailEi@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE9pubsetbufEPc{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE9showmanycEv@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE9sputbackcEc@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIcNS_11char_traitsIcEEE9underflowEv@Base 1:21.1
@@ -1021,15 +850,10 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE5imbueERKNS_6localeE@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE5pbumpEi@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE5sgetcEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE5sgetnEPw{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE5sputcEw@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE5sputnEPKw{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE5uflowEv@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE6sbumpcEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE6setbufEPw{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE6snextcEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE6xsgetnEPw{ssize_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE6xsputnEPKw{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE7pubsyncEv@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE7seekoffExNS_8ios_base7seekdirEj@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE7seekposENS_4fposI11__mbstate_tEEj@Base 1:21.1
@@ -1040,7 +864,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE8pubimbueERKNS_6localeE@Base 1:21.1
  (optional=templinst|arch=hurd-i386)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE9pbackfailEi@Base 1:21.1.5
  (optional=templinst|arch=!hurd-i386)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE9pbackfailEj@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE9pubsetbufEPw{ssize_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE9showmanycEv@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE9sputbackcEw@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_streambufIwNS_11char_traitsIwEEE9underflowEv@Base 1:21.1
@@ -1062,19 +885,9 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__115basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEEC2EOS5_@Base 1:21.1
  (optional=templinst)_ZNSt3__115basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEEaSEOS5_@Base 1:21.1
  _ZNSt3__115future_categoryEv@Base 1:21.1
- (optional=templinst)_ZNSt3__115numpunct_bynameIcE6__initEPKc@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115numpunct_bynameIcEC1EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__115numpunct_bynameIcEC1ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__115numpunct_bynameIcEC2EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__115numpunct_bynameIcEC2ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115numpunct_bynameIcED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__115numpunct_bynameIcED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__115numpunct_bynameIcED2Ev@Base 1:21.1
- (optional=templinst)_ZNSt3__115numpunct_bynameIwE6__initEPKc@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__115numpunct_bynameIwEC1EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__115numpunct_bynameIwEC1ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__115numpunct_bynameIwEC2EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__115numpunct_bynameIwEC2ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__115numpunct_bynameIwED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__115numpunct_bynameIwED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__115numpunct_bynameIwED2Ev@Base 1:21.1
@@ -1087,12 +900,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__115recursive_mutexD2Ev@Base 1:21.1
  _ZNSt3__115system_categoryEv@Base 1:21.1
  _ZNSt3__116__check_groupingERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPjS8_Rj@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__116__narrow_to_utf8IL{size_t}16EED0Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__116__narrow_to_utf8IL{size_t}16EED1Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__116__narrow_to_utf8IL{size_t}16EED2Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__116__narrow_to_utf8IL{size_t}32EED0Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__116__narrow_to_utf8IL{size_t}32EED1Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__116__narrow_to_utf8IL{size_t}32EED2Ev@Base 1:21.1.5
  _ZNSt3__116generic_categoryEv@Base 1:21.1
  _ZNSt3__117__assoc_sub_state10__sub_waitERNS_11unique_lockINS_5mutexEEE@Base 1:21.1
  _ZNSt3__117__assoc_sub_state12__make_readyEv@Base 1:21.1
@@ -1104,12 +911,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__117__assoc_sub_state4waitEv@Base 1:21.1
  _ZNSt3__117__assoc_sub_state9__executeEv@Base 1:21.1
  _ZNSt3__117__assoc_sub_state9set_valueEv@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__117__widen_from_utf8IL{size_t}16EED0Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__117__widen_from_utf8IL{size_t}16EED1Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__117__widen_from_utf8IL{size_t}16EED2Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__117__widen_from_utf8IL{size_t}32EED0Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__117__widen_from_utf8IL{size_t}32EED1Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__117__widen_from_utf8IL{size_t}32EED2Ev@Base 1:21.1.5
  _ZNSt3__117bad_function_callD0Ev@Base 1:21.1
  _ZNSt3__117bad_function_callD1Ev@Base 1:21.1
  _ZNSt3__117bad_function_callD2Ev@Base 1:21.1
@@ -1119,14 +920,10 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__117moneypunct_bynameIwLb0EE4initEPKc@Base 1:21.1
  (optional=templinst)_ZNSt3__117moneypunct_bynameIwLb1EE4initEPKc@Base 1:21.1
  _ZNSt3__118__get_ostream_fileERNS_13basic_ostreamIcNS_11char_traitsIcEEEE@Base 1:21.1
- (optional=templinst)_ZNSt3__118__time_get_storageIcE4initERKNS_5ctypeIcEE@Base 1:21.1
- (optional=templinst)_ZNSt3__118__time_get_storageIcE9__analyzeEcRKNS_5ctypeIcEE@Base 1:21.1
  (optional=templinst)_ZNSt3__118__time_get_storageIcEC1EPKc@Base 1:21.1
  (optional=templinst)_ZNSt3__118__time_get_storageIcEC1ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE@Base 1:21.1
  (optional=templinst)_ZNSt3__118__time_get_storageIcEC2EPKc@Base 1:21.1
  (optional=templinst)_ZNSt3__118__time_get_storageIcEC2ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE@Base 1:21.1
- (optional=templinst)_ZNSt3__118__time_get_storageIwE4initERKNS_5ctypeIwEE@Base 1:21.1
- (optional=templinst)_ZNSt3__118__time_get_storageIwE9__analyzeEcRKNS_5ctypeIwEE@Base 1:21.1
  (optional=templinst)_ZNSt3__118__time_get_storageIwEC1EPKc@Base 1:21.1
  (optional=templinst)_ZNSt3__118__time_get_storageIwEC1ERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE@Base 1:21.1
  (optional=templinst)_ZNSt3__118__time_get_storageIwEC2EPKc@Base 1:21.1
@@ -1134,7 +931,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__118basic_stringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEaSEOS5_@Base 1:21.1
  _ZNSt3__118condition_variable10notify_allEv@Base 1:21.1
  _ZNSt3__118condition_variable10notify_oneEv@Base 1:21.1
- (subst)_ZNSt3__118condition_variable15__do_timed_waitERNS_11unique_lockINS_5mutexEEENS_6chrono10time_pointINS5_12system_clockENS5_8durationIxNS_5ratioIL{int64_t}1EL{int64_t}1000000000EEEEEEE@Base 1:21.1.5
  _ZNSt3__118condition_variable4waitERNS_11unique_lockINS_5mutexEEE@Base 1:21.1
  _ZNSt3__118condition_variableD1Ev@Base 1:21.1
  _ZNSt3__118condition_variableD2Ev@Base 1:21.1
@@ -1166,6 +962,7 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__119__thread_local_dataEv@Base 1:21.1
  (optional=templinst)_ZNSt3__119basic_istringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEaSEOS5_@Base 1:21.1
  (optional=templinst)_ZNSt3__119basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEaSEOS5_@Base 1:21.1
+ (optional=templinst|subst)_ZNSt3__120__atomic_wait_nativeIL{size_t}4EEEvPKvS2_@Base 1:22.1
  _ZNSt3__120__get_collation_nameEPKc@Base 1:21.1
  (arch=!hurd-i386)_ZNSt3__120__libcpp_atomic_waitEPVKNS_17__cxx_atomic_implIiNS_22__cxx_atomic_base_implIiEEEEi@Base 1:21.1.5
  (arch=hurd-i386)_ZNSt3__120__libcpp_atomic_waitEPVKNS_17__cxx_atomic_implIxNS_22__cxx_atomic_base_implIxEEEEx@Base 1:21.1.5
@@ -1181,6 +978,7 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__121recursive_timed_mutexD1Ev@Base 1:21.1
  _ZNSt3__121recursive_timed_mutexD2Ev@Base 1:21.1
  _ZNSt3__122__libcpp_verbose_abortEPKcz@Base 1:21.1
+ _ZNSt3__123__atomic_monitor_globalEPKv@Base 1:22.1
  (arch=!hurd-i386)_ZNSt3__123__cxx_atomic_notify_allEPVKNS_17__cxx_atomic_implIiNS_22__cxx_atomic_base_implIiEEEE@Base 1:21.1.5
  (arch=hurd-i386)_ZNSt3__123__cxx_atomic_notify_allEPVKNS_17__cxx_atomic_implIxNS_22__cxx_atomic_base_implIxEEEE@Base 1:21.1.5
  _ZNSt3__123__cxx_atomic_notify_allEPVKv@Base 1:21.1
@@ -1191,11 +989,17 @@ libc++.so.1 #PACKAGE# #MINVER#
  (arch=hurd-i386)_ZNSt3__123__libcpp_atomic_monitorEPVKNS_17__cxx_atomic_implIxNS_22__cxx_atomic_base_implIxEEEE@Base 1:21.1.5
  _ZNSt3__123__libcpp_atomic_monitorEPVKv@Base 1:21.1
  _ZNSt3__125notify_all_at_thread_exitERNS_18condition_variableENS_11unique_lockINS_5mutexEEE@Base 1:21.1
+ (optional=templinst|subst)_ZNSt3__126__atomic_notify_all_nativeIL{size_t}4EEEvPKv@Base 1:22.1
+ (optional=templinst|subst)_ZNSt3__126__atomic_notify_one_nativeIL{size_t}4EEEvPKv@Base 1:22.1
+ _ZNSt3__126__atomic_wait_global_tableEPKvi@Base 1:22.1
  (optional=templinst)_ZNSt3__127__from_chars_floating_pointIdEENS_19__from_chars_resultIT_EEPKcS5_NS_12chars_formatE@Base 1:21.1
  (optional=templinst)_ZNSt3__127__from_chars_floating_pointIfEENS_19__from_chars_resultIT_EEPKcS5_NS_12chars_formatE@Base 1:21.1
  _ZNSt3__131__arrive_barrier_algorithm_baseEPNS_24__barrier_algorithm_baseEh@Base 1:21.1
+ _ZNSt3__132__atomic_notify_all_global_tableEPKv@Base 1:22.1
+ _ZNSt3__132__atomic_notify_one_global_tableEPKv@Base 1:22.1
  _ZNSt3__132__destroy_barrier_algorithm_baseEPNS_24__barrier_algorithm_baseE@Base 1:21.1
- (subst)_ZNSt3__134__construct_barrier_algorithm_baseER{ssize_t}@Base 1:21.1.5
+ (optional=templinst|subst)_ZNSt3__133__atomic_wait_native_with_timeoutIL{size_t}4EEEvPKvS2_{uint64_t}@Base 1:22.1
+ (subst)_ZNSt3__139__atomic_wait_global_table_with_timeoutEPKvi{uint64_t}@Base 1:22.1
  _ZNSt3__13cinE@Base 1:21.1
  _ZNSt3__13pmr15memory_resourceD0Ev@Base 1:21.1
  _ZNSt3__13pmr15memory_resourceD1Ev@Base 1:21.1
@@ -1204,12 +1008,7 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__13pmr20get_default_resourceEv@Base 1:21.1
  _ZNSt3__13pmr20null_memory_resourceEv@Base 1:21.1
  _ZNSt3__13pmr20set_default_resourceEPNS0_15memory_resourceE@Base 1:21.1
- (subst)_ZNSt3__13pmr25monotonic_buffer_resource11do_allocateE{size_t}{size_t}@Base 1:21.1.5
- (subst)_ZNSt3__13pmr28unsynchronized_pool_resource11do_allocateE{size_t}{size_t}@Base 1:21.1.5
- (subst)_ZNSt3__13pmr28unsynchronized_pool_resource12__adhoc_pool13__do_allocateEPNS0_15memory_resourceE{size_t}{size_t}@Base 1:21.1.5
  _ZNSt3__13pmr28unsynchronized_pool_resource12__adhoc_pool13__release_ptrEPNS0_15memory_resourceE@Base 1:21.1
- (subst)_ZNSt3__13pmr28unsynchronized_pool_resource12__adhoc_pool15__do_deallocateEPNS0_15memory_resourceEPv{size_t}{size_t}@Base 1:21.1.5
- (subst)_ZNSt3__13pmr28unsynchronized_pool_resource13do_deallocateEPv{size_t}{size_t}@Base 1:21.1.5
  _ZNSt3__13pmr28unsynchronized_pool_resource7releaseEv@Base 1:21.1
  _ZNSt3__13pmr28unsynchronized_pool_resourceC1ERKNS0_12pool_optionsEPNS0_15memory_resourceE@Base 1:21.1
  _ZNSt3__13pmr28unsynchronized_pool_resourceC2ERKNS0_12pool_optionsEPNS0_15memory_resourceE@Base 1:21.1
@@ -1222,7 +1021,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__14__fs10filesystem12__remove_allERKNS1_4pathEPNS_10error_codeE@Base 1:21.1
  _ZNSt3__14__fs10filesystem13__fs_is_emptyERKNS1_4pathEPNS_10error_codeE@Base 1:21.1
  _ZNSt3__14__fs10filesystem13__permissionsERKNS1_4pathENS1_5permsENS1_12perm_optionsEPNS_10error_codeE@Base 1:21.1
- (subst)_ZNSt3__14__fs10filesystem13__resize_fileERKNS1_4pathE{uint64_t}PNS_10error_codeE@Base 1:21.1.5
  _ZNSt3__14__fs10filesystem14__copy_symlinkERKNS1_4pathES4_PNS_10error_codeE@Base 1:21.1
  _ZNSt3__14__fs10filesystem14__current_pathEPNS_10error_codeE@Base 1:21.1
  _ZNSt3__14__fs10filesystem14__current_pathERKNS1_4pathEPNS_10error_codeE@Base 1:21.1
@@ -1237,7 +1035,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__14__fs10filesystem16filesystem_errorD1Ev@Base 1:21.1
  _ZNSt3__14__fs10filesystem16filesystem_errorD2Ev@Base 1:21.1
  _ZNSt3__14__fs10filesystem17__hard_link_countERKNS1_4pathEPNS_10error_codeE@Base 1:21.1
- (arch=amd64 arm64 loong64 ppc64 ppc64el riscv64 s390x sparc64 x32|subst)_ZNSt3__14__fs10filesystem17__last_write_timeERKNS1_4pathENS_6chrono10time_pointINS1_16_FilesystemClockENS5_8durationInNS_5ratioIL{int64_t}1EL{int64_t}1000000000EEEEEEEPNS_10error_codeE@Base 1:21.1.5
  (arch=armel armhf hurd-i386 i386 powerpc)_ZNSt3__14__fs10filesystem17__last_write_timeERKNS1_4pathENS_6chrono10time_pointINS1_16_FilesystemClockENS5_8durationIxNS_5ratioILx1ELx1000000000EEEEEEEPNS_10error_codeE@Base 1:21.1.5
  _ZNSt3__14__fs10filesystem17__last_write_timeERKNS1_4pathEPNS_10error_codeE@Base 1:21.1
  _ZNSt3__14__fs10filesystem18__create_directoryERKNS1_4pathEPNS_10error_codeE@Base 1:21.1
@@ -1285,12 +1082,9 @@ libc++.so.1 #PACKAGE# #MINVER#
  (arch=armel armhf hurd-i386 i386 powerpc x32)_ZNSt3__14stolERKNS_12basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEEPji@Base 1:21.1.5
  (arch=!armel !armhf !hurd-i386 !i386 !powerpc !x32)_ZNSt3__14stolERKNS_12basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEEPmi@Base 1:21.1
  _ZNSt3__14wcinE@Base 1:21.1
- (subst)_ZNSt3__15alignE{size_t}{size_t}RPvR{size_t}@Base 1:21.1.5
  _ZNSt3__15ctypeIcE10table_sizeE@Base 1:21.1
  (optional=templinst)_ZNSt3__15ctypeIcE13classic_tableEv@Base 1:21.1
  _ZNSt3__15ctypeIcE2idE@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__15ctypeIcEC1EPKtb{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__15ctypeIcEC2EPKtb{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__15ctypeIcED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__15ctypeIcED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__15ctypeIcED2Ev@Base 1:21.1
@@ -1303,18 +1097,11 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__15mutex8try_lockEv@Base 1:21.1
  _ZNSt3__15mutexD1Ev@Base 1:21.1
  _ZNSt3__15mutexD2Ev@Base 1:21.1
- (subst)_ZNSt3__15stoldERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEP{size_t}@Base 1:21.1.5
- (subst)_ZNSt3__15stoldERKNS_12basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEEP{size_t}@Base 1:21.1.5
- (subst)_ZNSt3__15stollERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEP{size_t}i@Base 1:21.1.5
- (subst)_ZNSt3__15stollERKNS_12basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEEP{size_t}i@Base 1:21.1.5
- (subst)_ZNSt3__15stoulERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEP{size_t}i@Base 1:21.1.5
- (subst)_ZNSt3__15stoulERKNS_12basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEEP{size_t}i@Base 1:21.1.5
  _ZNSt3__15wcerrE@Base 1:21.1
  _ZNSt3__15wclogE@Base 1:21.1
  _ZNSt3__15wcoutE@Base 1:21.1
  _ZNSt3__16__clocEv@Base 1:21.1
  _ZNSt3__16__itoa8__u32toaEjPc@Base 1:21.1
- (subst)_ZNSt3__16__itoa8__u64toaE{uint64_t}Pc@Base 1:21.1.5
  (optional=templinst)_ZNSt3__16__sortIRNS_6__lessIaaEEPaEEvT0_S5_T_@Base 1:21.1
  (optional=templinst)_ZNSt3__16__sortIRNS_6__lessIccEEPcEEvT0_S5_T_@Base 1:21.1
  (optional=templinst)_ZNSt3__16__sortIRNS_6__lessIddEEPdEEvT0_S5_T_@Base 1:21.1
@@ -1330,19 +1117,15 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__16__sortIRNS_6__lessIwwEEPwEEvT0_S5_T_@Base 1:21.1
  (optional=templinst)_ZNSt3__16__sortIRNS_6__lessIxxEEPxEEvT0_S5_T_@Base 1:21.1
  (optional=templinst)_ZNSt3__16__sortIRNS_6__lessIyyEEPyEEvT0_S5_T_@Base 1:21.1
- (optional=templinst|arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__16__sortIRNS_6__lessI{long_double}{long_double}EEP{long_double}EEvT0_S5_T_@Base 1:21.1.5
  _ZNSt3__16chrono12steady_clock3nowEv@Base 1:21.1
  _ZNSt3__16chrono12steady_clock9is_steadyE@Base 1:21.1
-#MISSING: 1:21.1.5# (subst|arch=hurd-i386 i386)_ZNSt3__16chrono12system_clock11from_time_tE{time_t}@Base 1:21.1.5
  _ZNSt3__16chrono12system_clock3nowEv@Base 1:21.1
  _ZNSt3__16chrono12system_clock9is_steadyE@Base 1:21.1
- (subst)_ZNSt3__16chrono12system_clock9to_time_tERKNS0_10time_pointIS1_NS0_8durationIxNS_5ratioIL{int64_t}1EL{int64_t}1000000EEEEEEE@Base 1:21.1.5
  (optional=templinst)_ZNSt3__16futureIvE3getEv@Base 1:21.1
  (optional=templinst)_ZNSt3__16futureIvEC1EPNS_17__assoc_sub_stateE@Base 1:21.1
  (optional=templinst)_ZNSt3__16futureIvEC2EPNS_17__assoc_sub_stateE@Base 1:21.1
  (optional=templinst)_ZNSt3__16futureIvED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__16futureIvED2Ev@Base 1:21.1
- (subst)_ZNSt3__16gslice6__initE{size_t}@Base 1:21.1.5
  _ZNSt3__16locale14__install_ctorERKS0_PNS0_5facetEl@Base 1:21.1
  _ZNSt3__16locale2id5__getEv@Base 1:21.1
  _ZNSt3__16locale2id9__next_idE@Base 1:21.1
@@ -1378,8 +1161,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__16localeD1Ev@Base 1:21.1
  _ZNSt3__16localeD2Ev@Base 1:21.1
  _ZNSt3__16localeaSERKS0_@Base 1:21.1
- (subst)_ZNSt3__16stoullERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEP{size_t}i@Base 1:21.1.5
- (subst)_ZNSt3__16stoullERKNS_12basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEEEP{size_t}i@Base 1:21.1.5
  _ZNSt3__16thread20hardware_concurrencyEv@Base 1:21.1
  _ZNSt3__16thread4joinEv@Base 1:21.1
  _ZNSt3__16thread6detachEv@Base 1:21.1
@@ -1406,10 +1187,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (optional=templinst)_ZNSt3__17codecvtIcc11__mbstate_tED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__17codecvtIcc11__mbstate_tED2Ev@Base 1:21.1
  _ZNSt3__17codecvtIwc11__mbstate_tE2idE@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__17codecvtIwc11__mbstate_tEC1EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__17codecvtIwc11__mbstate_tEC1E{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__17codecvtIwc11__mbstate_tEC2EPKc{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__17codecvtIwc11__mbstate_tEC2E{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__17codecvtIwc11__mbstate_tED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__17codecvtIwc11__mbstate_tED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__17codecvtIwc11__mbstate_tED2Ev@Base 1:21.1
@@ -1497,14 +1274,10 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZNSt3__18messagesIcE2idE@Base 1:21.1
  _ZNSt3__18messagesIwE2idE@Base 1:21.1
  _ZNSt3__18numpunctIcE2idE@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__18numpunctIcEC1E{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__18numpunctIcEC2E{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__18numpunctIcED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__18numpunctIcED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__18numpunctIcED2Ev@Base 1:21.1
  _ZNSt3__18numpunctIwE2idE@Base 1:21.1
- (optional=templinst|subst)_ZNSt3__18numpunctIwEC1E{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__18numpunctIwEC2E{size_t}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__18numpunctIwED0Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__18numpunctIwED1Ev@Base 1:21.1
  (optional=templinst)_ZNSt3__18numpunctIwED2Ev@Base 1:21.1
@@ -1521,14 +1294,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (arch=ppc64el)_ZNSt3__18to_charsEPcS0_u9__ieee128@Base 1:21.1
  (arch=ppc64el)_ZNSt3__18to_charsEPcS0_u9__ieee128NS_12chars_formatE@Base 1:21.1
  (arch=ppc64el)_ZNSt3__18to_charsEPcS0_u9__ieee128NS_12chars_formatEi@Base 1:21.1
- (arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__18to_charsEPcS0_{long_double}@Base 1:21.1.5
- (arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__18to_charsEPcS0_{long_double}NS_12chars_formatE@Base 1:21.1.5
- (arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__18to_charsEPcS0_{long_double}NS_12chars_formatEi@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__18valarrayI{size_t}E6resizeE{size_t}{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__18valarrayI{size_t}EC1E{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__18valarrayI{size_t}EC2E{size_t}@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__18valarrayI{size_t}ED1Ev@Base 1:21.1.5
- (optional=templinst|subst)_ZNSt3__18valarrayI{size_t}ED2Ev@Base 1:21.1.5
  (optional=templinst)_ZNSt3__19__num_getIcE17__stage2_int_loopEciPcRS2_RjcRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPjRSD_S2_@Base 1:21.1
  (optional=templinst)_ZNSt3__19__num_getIcE17__stage2_int_prepERNS_8ios_baseEPcRc@Base 1:21.1
  (optional=templinst)_ZNSt3__19__num_getIcE19__stage2_float_loopEcRbRcPcRS4_ccRKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPjRSE_RjS4_@Base 1:21.1
@@ -1567,7 +1332,6 @@ libc++.so.1 #PACKAGE# #MINVER#
  (arch=ppc64el)_ZNSt3__19to_stringEu9__ieee128@Base 1:21.1
  _ZNSt3__19to_stringEx@Base 1:21.1
  _ZNSt3__19to_stringEy@Base 1:21.1
- (arch=amd64 arm64 armhf hurd-i386 i386 loong64 powerpc ppc64 riscv64 s390x sparc64 x32|subst)_ZNSt3__19to_stringE{long_double}@Base 1:21.1.5
  (optional=templinst)_ZNSt3__1plIcNS_11char_traitsIcEENS_9allocatorIcEEEENS_12basic_stringIT_T0_T1_EEPKS6_RKS9_@Base 1:21.1
  _ZSt17__throw_bad_allocv@Base 1:21.1
  _ZSt17current_exceptionv@Base 1:21.1
@@ -1640,11 +1404,7 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZTINSt3__115time_get_bynameIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEEE@Base 1:21.1
  _ZTINSt3__115time_put_bynameIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEE@Base 1:21.1
  _ZTINSt3__115time_put_bynameIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEEE@Base 1:21.1
- (subst)_ZTINSt3__116__narrow_to_utf8IL{size_t}16EEE@Base 1:21.1.5
- (subst)_ZTINSt3__116__narrow_to_utf8IL{size_t}32EEE@Base 1:21.1.5
  _ZTINSt3__117__assoc_sub_stateE@Base 1:21.1
- (subst)_ZTINSt3__117__widen_from_utf8IL{size_t}16EEE@Base 1:21.1.5
- (subst)_ZTINSt3__117__widen_from_utf8IL{size_t}32EEE@Base 1:21.1.5
  _ZTINSt3__117bad_function_callE@Base 1:21.1
  _ZTINSt3__117moneypunct_bynameIcLb0EEE@Base 1:21.1
  _ZTINSt3__117moneypunct_bynameIcLb1EEE@Base 1:21.1
@@ -1773,11 +1533,7 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZTSNSt3__115time_get_bynameIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEEE@Base 1:21.1
  _ZTSNSt3__115time_put_bynameIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEE@Base 1:21.1
  _ZTSNSt3__115time_put_bynameIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEEE@Base 1:21.1
- (subst)_ZTSNSt3__116__narrow_to_utf8IL{size_t}16EEE@Base 1:21.1.5
- (subst)_ZTSNSt3__116__narrow_to_utf8IL{size_t}32EEE@Base 1:21.1.5
  _ZTSNSt3__117__assoc_sub_stateE@Base 1:21.1
- (subst)_ZTSNSt3__117__widen_from_utf8IL{size_t}16EEE@Base 1:21.1.5
- (subst)_ZTSNSt3__117__widen_from_utf8IL{size_t}32EEE@Base 1:21.1.5
  _ZTSNSt3__117bad_function_callE@Base 1:21.1
  _ZTSNSt3__117moneypunct_bynameIcLb0EEE@Base 1:21.1
  _ZTSNSt3__117moneypunct_bynameIcLb1EEE@Base 1:21.1
@@ -1907,11 +1663,7 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZTVNSt3__115time_get_bynameIwNS_19istreambuf_iteratorIwNS_11char_traitsIwEEEEEE@Base 1:21.1
  _ZTVNSt3__115time_put_bynameIcNS_19ostreambuf_iteratorIcNS_11char_traitsIcEEEEEE@Base 1:21.1
  _ZTVNSt3__115time_put_bynameIwNS_19ostreambuf_iteratorIwNS_11char_traitsIwEEEEEE@Base 1:21.1
- (subst)_ZTVNSt3__116__narrow_to_utf8IL{size_t}16EEE@Base 1:21.1.5
- (subst)_ZTVNSt3__116__narrow_to_utf8IL{size_t}32EEE@Base 1:21.1.5
  _ZTVNSt3__117__assoc_sub_stateE@Base 1:21.1
- (subst)_ZTVNSt3__117__widen_from_utf8IL{size_t}16EEE@Base 1:21.1.5
- (subst)_ZTVNSt3__117__widen_from_utf8IL{size_t}32EEE@Base 1:21.1.5
  _ZTVNSt3__117bad_function_callE@Base 1:21.1
  _ZTVNSt3__117moneypunct_bynameIcLb0EEE@Base 1:21.1
  _ZTVNSt3__117moneypunct_bynameIcLb1EEE@Base 1:21.1
@@ -1966,7 +1718,7 @@ libc++.so.1 #PACKAGE# #MINVER#
  _ZTVSt16nested_exception@Base 1:21.1
  _ZTVSt18bad_variant_access@Base 1:21.1
  _ZTVSt19bad_optional_access@Base 1:21.1
- (arch=mips64el s390x sparc64 x32)__muloti4@Base 1:21.1
+ (arch=mips64el sparc64 x32)__muloti4@Base 1:21.1
  (c++)"construction vtable for std::__1::basic_iostream<char, std::__1::char_traits<char> >-in-std::__1::basic_stringstream<char, std::__1::char_traits<char>, std::__1::allocator<char> >@Base" 1:21.1
  (c++)"construction vtable for std::__1::basic_iostream<char, std::__1::char_traits<char> >-in-std::__1::strstream@Base" 1:21.1
  (c++)"construction vtable for std::__1::basic_istream<char, std::__1::char_traits<char> >-in-std::__1::basic_ifstream<char, std::__1::char_traits<char> >@Base" 1:21.1

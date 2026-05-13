@@ -1,4 +1,4 @@
-# SymbolsHelper-Confirmed: 1:21.1.5 amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64
+# SymbolsHelper-Confirmed: 1:22.1 amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64
 libomp.so.5 #PACKAGE# #MINVER#
  (symver)GOMP_1.0 0.20131209
  (symver)GOMP_2.0 0.20131209
@@ -142,6 +142,7 @@ libomp.so.5 #PACKAGE# #MINVER#
  (symver|arch=ppc64)OMP_4.0 1:21
  (symver|arch=ppc64)OMP_4.5 1:21
  (symver|arch=ppc64)OMP_5.0 1:21
+ (symver|arch=ppc64)OMP_6.0 1:22
  (arch=ppc64)VERSION@VERSION 1:21.1.5
  ___kmp_allocate@VERSION 1:21.1
  ___kmp_free@VERSION 1:21.1
@@ -725,6 +726,7 @@ libomp.so.5 #PACKAGE# #MINVER#
  kmp_set_warnings_off_@VERSION 1:21.1
  kmp_set_warnings_on@VERSION 1:21.1
  kmp_set_warnings_on_@VERSION 1:21.1
+ (arch=!armhf !i386)kmp_target_sync_cb@VERSION 1:22.1
  kmp_threadprivate_insert@VERSION 1:21.1
  kmp_threadprivate_insert_private_data@VERSION 1:21.1
  kmp_unset_affinity_mask_proc@VERSION 1:21.1
@@ -809,6 +811,8 @@ libomp.so.5 #PACKAGE# #MINVER#
  omp_get_device_and_host_allocator_@VERSION 1:21.1
  omp_get_device_and_host_memspace@VERSION 1:21.1
  omp_get_device_and_host_memspace_@VERSION 1:21.1
+ omp_get_device_from_uid@VERSION 1:22.1
+ omp_get_device_from_uid_@VERSION 1:22.1
  omp_get_device_memspace@VERSION 1:21.1
  omp_get_device_memspace_@VERSION 1:21.1
  omp_get_device_num@VERSION 1:21.1
@@ -941,6 +945,8 @@ libomp.so.5 #PACKAGE# #MINVER#
  omp_get_thread_num@VERSION 1:21.1
  omp_get_thread_num_@OMP_1.0 1:21.1
  omp_get_thread_num_@VERSION 1:21.1
+ omp_get_uid_from_device@VERSION 1:22.1
+ omp_get_uid_from_device_@VERSION 1:22.1
  omp_get_wtick@OMP_2.0 1:21.1
  omp_get_wtick@VERSION 1:21.1
  omp_get_wtick_@OMP_2.0 1:21.1

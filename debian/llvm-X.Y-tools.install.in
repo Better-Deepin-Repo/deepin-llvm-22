@@ -1,5 +1,6 @@
 @LLVM_DIR@/bin/count
 @LLVM_DIR@/bin/FileCheck
+@LLVM_DIR@/bin/lit
 @LLVM_DIR@/bin/not
 @LLVM_DIR@/bin/split-file
 @LLVM_DIR@/bin/yaml-bench
@@ -12,10 +13,11 @@
 @LLVM_DIR@/share/opt-viewer/optpmap.py
 @LLVM_DIR@/share/opt-viewer/opt-stats.py
 
-@LLVM_DIR@/build/utils/lit
+@LLVM_DIR@/utils/lit
 
 usr/bin/count-@LLVM_VERSION@
 usr/bin/FileCheck-@LLVM_VERSION@
+usr/bin/lit-@LLVM_VERSION@
 usr/bin/not-@LLVM_VERSION@
 usr/bin/yaml-bench-@LLVM_VERSION@
 usr/bin/split-file-@LLVM_VERSION@
