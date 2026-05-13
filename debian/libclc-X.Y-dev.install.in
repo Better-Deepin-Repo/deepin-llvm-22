@@ -1,0 +1,2 @@
+usr/lib/pkgconfig/libclc.pc
+libclc/check_external_funcs.sh @LLVM_DIR@/share/libclc

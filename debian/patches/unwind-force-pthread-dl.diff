@@ -1,0 +1,28 @@
+Index: llvm-toolchain-snapshot_22~++20251109094636+93d445cba39f/libunwind/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-snapshot_22~++20251109094636+93d445cba39f.orig/libunwind/CMakeLists.txt
++++ llvm-toolchain-snapshot_22~++20251109094636+93d445cba39f/libunwind/CMakeLists.txt
+@@ -323,14 +323,17 @@ if (MSVC)
+   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+ endif()
+ 
+-if (C_SUPPORTS_COMMENT_LIB_PRAGMA)
+-  if (LIBUNWIND_HAS_DL_LIB)
++list(APPEND LIBUNWIND_LINK_FLAGS "-ldl")
++list(APPEND LIBUNWIND_LINK_FLAGS "-lpthread")
++
++#if (C_SUPPORTS_COMMENT_LIB_PRAGMA)
++#  if (LIBUNWIND_HAS_DL_LIB)
+     add_definitions(-D_LIBUNWIND_LINK_DL_LIB)
+-  endif()
+-  if (LIBUNWIND_HAS_PTHREAD_LIB)
++#  endif()
++#  if (LIBUNWIND_HAS_PTHREAD_LIB)
+     add_definitions(-D_LIBUNWIND_LINK_PTHREAD_LIB)
+-  endif()
+-endif()
++#  endif()
++#endif()
+ 
+ if (RUNTIMES_EXECUTE_ONLY_CODE)
+   add_compile_definitions(_LIBUNWIND_EXECUTE_ONLY_CODE)

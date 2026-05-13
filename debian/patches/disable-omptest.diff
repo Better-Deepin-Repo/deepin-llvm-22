@@ -1,0 +1,16 @@
+Index: llvm-project/openmp/tools/omptest/CMakeLists.txt
+===================================================================
+--- llvm-project.orig/openmp/tools/omptest/CMakeLists.txt
++++ llvm-project/openmp/tools/omptest/CMakeLists.txt
+@@ -16,9 +16,9 @@ option(LIBOMPTEST_INSTALL_COMPONENTS
+        "Install ompTest library, headers and package files." OFF)
+ 
+ # Exit early if OMPT support or LLVM-tests were disabled by the user.
+-if((NOT ${LIBOMP_OMPT_SUPPORT}) OR (NOT ${LLVM_INCLUDE_TESTS}))
++#if((NOT ${LIBOMP_OMPT_SUPPORT}) OR (NOT ${LLVM_INCLUDE_TESTS}))
+   return()
+-endif()
++#endif()
+ 
+ include(CMakePackageConfigHelpers)
+ 
