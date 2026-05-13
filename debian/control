@@ -900,7 +900,7 @@ Description: OpenCL C language implementation - development files
 Package: llvm-libunwind1
 Build-Profiles: <!pkg.llvm.noclang>
 Section: libs
-Architecture: amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64
+Architecture: amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64 s390x
 Multi-Arch: same
 Depends: ${shlibs:Depends},
  ${misc:Depends}
@@ -920,7 +920,7 @@ Description: LLVM unwinder, not compatible with glibc
 Package: libunwind-22-dev
 Build-Profiles: <!pkg.llvm.noclang>
 Section: libdevel
-Architecture: amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64
+Architecture: amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64 s390x
 Depends:
  ${misc:Depends},
  llvm-libunwind1 (>= ${binary:Version})

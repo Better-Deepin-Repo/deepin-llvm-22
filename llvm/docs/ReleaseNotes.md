@@ -144,8 +144,18 @@ Changes to the Hexagon Backend
 Changes to the LoongArch Backend
 --------------------------------
 
+* RuntimeDyld now supports the `Large` code model for LoongArch64.
+* The `PreserveMost` calling convention is now supported.
+* An option named `loongarch-enable-merge-offset` is added to allow disabling the `MergeBaseOffset` pass.
+* A macro instruction named `ud` is added.
+* `la.abs` now generates `R_LARCH_MARK_LA` relocation.
+* LASX and LSX conversion intrinsics are added.
+* Tail calls for `sret` and `byval` functions are now supported.
+* Always emit symbol-based relocations regardless of relaxation.
 * DWARF fission is now compatible with linker relaxations, allowing `-gsplit-dwarf` and `-mrelax`
   to be used together when building for the LoongArch platform.
+* Improved LoongArch32 support by adding LA32R/LA32S relocations, PC-relative address materialization, and `call`/`tail` macro instructions.
+* Assorted codegen improvements.
 
 Changes to the MIPS Backend
 ---------------------------
@@ -304,9 +314,15 @@ Changes to LLDB
   all the supported targets, along with the presence of (or lack of) optional
   features like XML parsing.
 * LLDB now includes formatters for many types from the MSVC STL.
+* DIL (the new `frame variable` implementation) now uses ':' as a bitfield
+  extraction range character. '-' is deprecated and will output an error when used.
 
 Changes to BOLT
 ---------------------------------
+
+*	Added support for lite mode on AArch64. It can be enabled with -lite=1. When
+  used, BOLT avoids duplicating cold code by reusing the original code, which
+  reduces output binary size.
 
 Changes to Sanitizers
 ---------------------
@@ -322,6 +338,27 @@ Other Changes
 * Introduces the `AllocToken` pass, an instrumentation pass providing tokens to
   memory allocators enabling various heap organization strategies, such as heap
   partitioning.
+
+* Integrated Distributed ThinLTO (DTLTO) aims to support distribution of ThinLTO
+  backend compilations for any in-process ThinLTO invocation. To enable this,
+  support for the ThinLTO cache (for incremental builds) has been added in this
+  release, and support for additional input file types has been implemented.
+
+  Bitcode objects contained in static libraries and archives (e.g. libc.a) are
+  now handled transparently by temporarily extracting referenced objects for
+  distribution. When thin archives are used (supported since LLVM 21), no
+  extraction is required.
+  
+  DTLTO creates a number of temporary files during operation, which are now
+  cleaned up correctly when the process exits abnormally, for example due to
+  Ctrl+C or similar termination events.
+  
+  A new DTLTO linker option, --thinlto-remote-compiler-prepend-arg, has been
+  added to support multi-call LLVM drivers. This option allows specifying an
+  additional argument to select the desired subcommand, for example
+  `llvm clang ....`
+  
+  Note that ELF and COFF remain the only supported platforms.
 
 External Open Source Projects Using LLVM {{env.config.release}}
 ===============================================================

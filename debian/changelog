@@ -1,3 +1,36 @@
+llvm-toolchain-22 (1:22.1.0~+rc3-1~exp1) experimental; urgency=medium
+
+  [ Matthias Klose ]
+  * d/rules: Fix self-referencing macro.
+
+  [ Sylvestre Ledru ]
+  * New rc release
+  * Fix autopkgtest failure with CMake 4. thanks to Adrian Bunk
+  * d/rules: Simplify and clean up:
+    - Remove empty hurd-i386 conditional block
+    - Fix inverted LLVM_LIBC_ENABLE and LTO_ENABLE info message conditions
+    - Consolidate duplicate mips64el architecture handling
+    - Factor out common sparc/sparc64 PARALLEL_LINK_JOBS setting
+    - Consolidate sed commands for CMake export files
+    - Consolidate wasm install commands into a loop
+    - Simplify jquery/underscore symlink replacement
+    - Consolidate Python cleanup commands
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 10 Feb 2026 09:27:55 +0100
+
+llvm-toolchain-22 (1:22.1.0~+rc2-1~exp1) experimental; urgency=medium
+
+  [ Matthias Klose ]
+  * Enable libunwind on s390x (Michael R. Crusoe). Addresses: #1126263.
+
+  [ Sylvestre Ledru ]
+  * New rc release
+  * Dedup the flags declarations
+  * Implement terse option in DEB_BUILD_OPTIONS to reduce build verbosity
+  * Break the build if DEB_BUILD_OPTIONS contains a comma
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 04 Feb 2026 13:19:58 +0100
+
 llvm-toolchain-22 (1:22.1.0~+rc1-1~exp1) experimental; urgency=medium
 
   [ Sylvestre Ledru ]

@@ -4,6 +4,11 @@ EMPTY =
 COMMA = ,
 SPACE = $(EMPTY) $(EMPTY)
 
+# Check if DEB_BUILD_OPTIONS contains a comma and break the build
+ifneq (,$(findstring $(COMMA),$(DEB_BUILD_OPTIONS)))
+$(error DEB_BUILD_OPTIONS contains a comma, which is not supported. Please use spaces to separate options.)
+endif
+
 # polly & lldb aren't enabled for every platform
 PROJECTS = clang;clang-tools-extra;lld;cross-project-tests;mlir
 # openmp & libunwind aren't enabled for every platform
@@ -110,6 +115,35 @@ define remove_rpath
 	  chrpath -d $$$$i; \
 	  echo "removed RPATH/RUNPATH: $$$$i"; \
 	done
+endef
+
+# Generate CMAKE compiler and linker flags
+# Usage: $(call CMAKE_FLAGS,cflags,cxxflags,ldflags)
+# Example: $(call CMAKE_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS))
+define CMAKE_FLAGS
+-DCMAKE_C_FLAGS="$(1)" \
+-DCMAKE_CXX_FLAGS="$(2)" \
+-DCMAKE_SHARED_LINKER_FLAGS="$(3)" \
+-DCMAKE_MODULE_LINKER_FLAGS="$(3)" \
+-DCMAKE_EXE_LINKER_FLAGS="$(3)"
+endef
+
+# Generate nested CMAKE args for BUILTINS_CMAKE_ARGS, RUNTIMES_CMAKE_ARGS, etc.
+# Usage: $(call CMAKE_NESTED_FLAGS,cflags,cxxflags,ldflags)
+# Optional 4th arg for build type (defaults to Release)
+# Optional 5th arg for additional flags
+define CMAKE_NESTED_FLAGS
+-DCMAKE_C_FLAGS=$(1);-DCMAKE_CXX_FLAGS=$(2);-DCMAKE_EXE_LINKER_FLAGS=$(3);-DCMAKE_SHARED_LINKER_FLAGS=$(3);-DCMAKE_MODULE_LINKER_FLAGS=$(3);-DCMAKE_BUILD_TYPE=$(if $(4),$(4),Release);$(if $(5),$(5);)-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF
+endef
+
+# Generate BOOTSTRAP_CMAKE flags (prepends BOOTSTRAP_ to flag names)
+# Usage: $(call BOOTSTRAP_CMAKE_FLAGS,cflags,cxxflags,ldflags)
+define BOOTSTRAP_CMAKE_FLAGS
+-DBOOTSTRAP_CMAKE_C_FLAGS="$(1)" \
+-DBOOTSTRAP_CMAKE_CXX_FLAGS="$(2)" \
+-DBOOTSTRAP_CMAKE_SHARED_LINKER_FLAGS="$(3)" \
+-DBOOTSTRAP_CMAKE_MODULE_LINKER_FLAGS="$(3)" \
+-DBOOTSTRAP_CMAKE_EXE_LINKER_FLAGS="$(3)"
 endef
 
 # set this macro to anything else than "yes" to avoid generating alternative
@@ -410,6 +444,10 @@ ifneq (,$(filter $(DEB_HOST_ARCH),mips64el))
   CFLAGS_EXTRA += -mxgot
   CXXFLAGS_EXTRA += -mxgot
   LDFLAGS_EXTRA += -mxgot
+# disable compiler-rt builtins (not supported for mips64el)
+  STAGE_ALL_CMAKE_EXTRA += -DCOMPILER_RT_BUILD_BUILTINS=OFF
+  COMPILER_RT_USE_BUILTINS_LIBRARY := OFF
+  LIBCXX_USE_COMPILER_RT := OFF
 endif
 
 ifneq (,$(filter $(DEB_HOST_ARCH),powerpc))
@@ -435,24 +473,18 @@ else
   opt_flags = -O2 -DNDEBUG -g1
 endif
 
-ifneq (,$(filter $(DEB_HOST_ARCH),sparc))
-  STAGE_ALL_CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=sparc-linux-gnu
+ifneq (,$(filter $(DEB_HOST_ARCH),sparc sparc64))
   STAGE_ALL_CMAKE_EXTRA += -DLLVM_PARALLEL_LINK_JOBS=4
 endif
-
+ifneq (,$(filter $(DEB_HOST_ARCH),sparc))
+  STAGE_ALL_CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=sparc-linux-gnu
+endif
 ifneq (,$(filter $(DEB_HOST_ARCH),sparc64))
   STAGE_ALL_CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=sparc64-linux-gnu
-  STAGE_ALL_CMAKE_EXTRA += -DLLVM_PARALLEL_LINK_JOBS=4
 endif
 
 ifneq (,$(filter $(DEB_HOST_ARCH),s390x))
   STAGE_ALL_CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=s390x-linux-gnu
-endif
-
-ifneq (,$(filter $(DEB_HOST_ARCH),mips64el))
-  STAGE_ALL_CMAKE_EXTRA += -DCOMPILER_RT_BUILD_BUILTINS=OFF
-  COMPILER_RT_USE_BUILTINS_LIBRARY := OFF
-  LIBCXX_USE_COMPILER_RT := OFF
 endif
 
 ifneq (,$(filter $(DEB_HOST_ARCH),x32))
@@ -461,9 +493,6 @@ ifneq (,$(filter $(DEB_HOST_ARCH),x32))
   STAGE_ALL_CMAKE_EXTRA += -DCOMPILER_RT_BUILD_BUILTINS=OFF
   COMPILER_RT_USE_BUILTINS_LIBRARY := OFF
   LIBCXX_USE_COMPILER_RT := OFF
-endif
-
-ifneq (,$(filter $(DEB_HOST_ARCH),hurd-i386))
 endif
 
 ifneq (,$(filter $(DEB_HOST_ARCH),hurd-amd64))
@@ -583,7 +612,7 @@ ifneq (,$(filter libllvmlibc-$(LLVM_VERSION)-dev, $(packages)))
     endif
 endif
 
-ifneq ($(LLVM_LIBC_ENABLE),no)
+ifeq ($(LLVM_LIBC_ENABLE),no)
     $(info LLVM libc disabled for $(DISTRO))
 endif
 
@@ -612,7 +641,7 @@ ifneq (,$(filter $(DEB_HOST_ARCH), $(POLLY_ARCHS)))
 endif
 
 # Enable libunwind (or not)
-LIBUNWIND_ARCHS := amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64
+LIBUNWIND_ARCHS := amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64 s390x
 LIBUNWIND_ENABLE=yes
 ifeq (,$(filter $(DEB_HOST_ARCH), $(LIBUNWIND_ARCHS)))
   LIBUNWIND_ENABLE=no
@@ -624,7 +653,7 @@ else
   RUNTIMES += ;libunwind
 endif
 ifeq ($(SKIP_COMMON_PACKAGES),yes)
-  COMMON_BUILD_DEPS = $(subst llvm-libunwind1,llvm-libunwind1 [$(LIBUNWIND_ARCHS)],$(COMMON_BUILD_DEPS))
+  COMMON_BUILD_DEPS := $(subst llvm-libunwind1,llvm-libunwind1 [$(LIBUNWIND_ARCHS)],$(COMMON_BUILD_DEPS))
 endif
 
 # Enable openmp (or not)
@@ -641,7 +670,7 @@ else
   STAGE_ALL_CMAKE_EXTRA += -DLIBOMP_LIBFLAGS="-lm"
 endif
 ifeq ($(SKIP_COMMON_PACKAGES),yes)
-  COMMON_BUILD_DEPS = $(subst libomp5,libomp5 [$(OMP_ARCHS)],$(COMMON_BUILD_DEPS))
+  COMMON_BUILD_DEPS := $(subst libomp5,libomp5 [$(OMP_ARCHS)],$(COMMON_BUILD_DEPS))
 endif
 
 # Enable offloading (or not)
@@ -709,6 +738,14 @@ ifneq (,$(filter coverity,$(DEB_BUILD_OPTIONS)))
         RUN_TEST=no
 else
         COVERITY_ENABLE=0
+endif
+
+# Handle terse build option to reduce verbosity
+CMAKE_VERBOSE=1
+CMAKE_VERBOSE_FLAG=VERBOSE=1
+ifneq (,$(filter terse,$(DEB_BUILD_OPTIONS)))
+	CMAKE_VERBOSE=0
+	CMAKE_VERBOSE_FLAG=
 endif
 
 # hurd has threading issues
@@ -795,7 +832,7 @@ else
 endif
 endif
 
-ifneq ($(LTO_ENABLE),no)
+ifeq ($(LTO_ENABLE),no)
     $(info LTO disabled for $(DEB_HOST_ARCH))
 endif
 
@@ -1114,6 +1151,7 @@ else
 endif
 endif
 	echo "Running tests: $(RUN_TEST)"
+	echo "Verbose build: $(CMAKE_VERBOSE)"
 	echo "Using cmake: $(CMAKE_BIN)"; \
 	LD_LIBRARY_PATH=$$LD_LIBRARY_PATH \
 	$(PRE_PROCESS_CONF) $(CMAKE_BIN) -S llvm/ -B $(TARGET_BUILD) \
@@ -1122,11 +1160,7 @@ endif
 	-DLLVM_VERSION_SUFFIX= \
 	-DCMAKE_SUPPRESS_REGENERATION=ON \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_C_FLAGS="$(STAGE_1_CFLAGS)" \
-	-DCMAKE_CXX_FLAGS="$(STAGE_1_CXXFLAGS)" \
-	-DCMAKE_SHARED_LINKER_FLAGS="$(STAGE_1_LDFLAGS)" \
-	-DCMAKE_MODULE_LINKER_FLAGS="$(STAGE_1_LDFLAGS)" \
-	-DCMAKE_EXE_LINKER_FLAGS="$(STAGE_1_LDFLAGS)" \
+	$(call CMAKE_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS)) \
 	-DPACKAGE_VENDOR=$(VENDOR) \
 	-DENABLE_LINKER_BUILD_ID=ON \
 	-DLLVM_TARGETS_TO_BUILD=Native \
@@ -1168,19 +1202,15 @@ endif
 	-DCLANG_FORCE_MATCHING_LIBCLANG_SOVERSION=ON \
 	-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF \
 	$(CMAKE_EXTRA) \
-	-DBUILTINS_CMAKE_ARGS="-DCMAKE_C_FLAGS=$(STAGE_1_CFLAGS);-DCMAKE_CXX_FLAGS=$(STAGE_1_CXXFLAGS);-DCMAKE_EXE_LINKER_FLAGS=$(STAGE_1_LDFLAGS);-DCMAKE_SHARED_LINKER_FLAGS=$(STAGE_1_LDFLAGS);-DCMAKE_MODULE_LINKER_FLAGS=$(STAGE_1_LDFLAGS);-DCMAKE_BUILD_TYPE=Release;-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF" \
-	-DRUNTIMES_CMAKE_ARGS="-DCMAKE_C_FLAGS=$(STAGE_1_CFLAGS);-DCMAKE_CXX_FLAGS=$(STAGE_1_CXXFLAGS);-DCMAKE_Fortran_FLAGS=$(RUNTIMES_FORTRAN_FLAGS);-DCMAKE_EXE_LINKER_FLAGS=$(STAGE_1_LDFLAGS);-DCMAKE_SHARED_LINKER_FLAGS=$(STAGE_1_LDFLAGS);-DCMAKE_MODULE_LINKER_FLAGS=$(STAGE_1_LDFLAGS);-DCMAKE_BUILD_TYPE=Release;-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF" \
+	-DBUILTINS_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS))" \
+	-DRUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS),Release,-DCMAKE_Fortran_FLAGS=$(RUNTIMES_FORTRAN_FLAGS))" \
 	-DCLANG_ENABLE_BOOTSTRAP=ON \
 	-DCLANG_BOOTSTRAP_TARGETS="$(ENABLED_STAGE2_CMAKE_BUILD_TARGETS)" \
 	-DCLANG_BOOTSTRAP_PASSTHROUGH="CMAKE_INSTALL_PREFIX;CMAKE_SUPPRESS_REGENERATION;ENABLE_LINKER_BUILD_ID;LLVM_ENABLE_PIC;LLVM_ENABLE_RTTI;LLVM_INCLUDE_GO_TESTS;LLVM_USE_RELATIVE_PATHS_IN_FILES;CLANG_DEFAULT_LINKER;CLANG_DEFAULT_CXX_STDLIB;CLANG_DEFAULT_RTLIB;COMPILER_RT_USE_LIBCXX;COMPILER_RT_USE_BUILTINS_LIBRARY;COMPILER_RT_DEFAULT_TARGET_ONLY;COMPILER_RT_INCLUDE_TESTS;LIBUNWIND_USE_COMPILER_RT;LIBCXXABI_ENABLE_EXCEPTIONS;LIBCXXABI_USE_COMPILER_RT;LIBCXXABI_USE_LLVM_UNWINDER;LIBCXX_USE_COMPILER_RT;LIBCXX_ENABLE_EXCEPTIONS;LIBCXX_ENABLE_STATIC_ABI_LIBRARY;LIBCXX_STATICALLY_LINK_ABI_IN_STATIC_LIBRARY;LIBCXX_STATICALLY_LINK_ABI_IN_SHARED_LIBRARY;LIBOMP_ENABLE_RTTI;LLVM_TEMPORARILY_ALLOW_OLD_TOOLCHAIN;CLANG_FORCE_MATCHING_LIBCLANG_SOVERSION;CMAKE_C_COMPILER_LAUNCHER;CMAKE_CXX_COMPILER_LAUNCHER;LLVM_LIBC_GPU_BUILD" \
 	-DBOOTSTRAP_CMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBOOTSTRAP_CMAKE_C_FLAGS_RELWITHDEBINFO="$(opt_flags)" \
 	-DBOOTSTRAP_CMAKE_CXX_FLAGS_RELWITHDEBINFO="$(opt_flags)" \
-	-DBOOTSTRAP_CMAKE_C_FLAGS="$(STAGE_2_CFLAGS)" \
-	-DBOOTSTRAP_CMAKE_CXX_FLAGS="$(STAGE_2_CXXFLAGS)" \
-	-DBOOTSTRAP_CMAKE_SHARED_LINKER_FLAGS="$(STAGE_2_LDFLAGS)" \
-	-DBOOTSTRAP_CMAKE_MODULE_LINKER_FLAGS="$(STAGE_2_LDFLAGS)" \
-	-DBOOTSTRAP_CMAKE_EXE_LINKER_FLAGS="$(STAGE_2_LDFLAGS)" \
+	$(call BOOTSTRAP_CMAKE_FLAGS,$(STAGE_2_CFLAGS),$(STAGE_2_CXXFLAGS),$(STAGE_2_LDFLAGS)) \
 	-DBOOTSTRAP_LLVM_ENABLE_FFI=ON \
 	-DBOOTSTRAP_LLVM_ENABLE_DUMP=ON \
 	-DBOOTSTRAP_LLVM_ENABLE_LIBPFM=ON \
@@ -1200,8 +1230,8 @@ endif
 	-DBOOTSTRAP_LIBCXX_INSTALL_EXPERIMENTAL_LIBRARY=ON \
 	-DBOOTSTRAP_PYTHON_EXECUTABLE=/usr/bin/python3 \
 	$(BOOTSTRAP_CMAKE_EXTRA) \
-	-DBOOTSTRAP_BUILTINS_CMAKE_ARGS="-DCMAKE_C_FLAGS=$(STAGE_2_CFLAGS);-DCMAKE_CXX_FLAGS=$(STAGE_2_CXXFLAGS);-DCMAKE_EXE_LINKER_FLAGS=$(STAGE_2_LDFLAGS);-DCMAKE_SHARED_LINKER_FLAGS=$(STAGE_2_LDFLAGS);-DCMAKE_MODULE_LINKER_FLAGS=$(STAGE_2_LDFLAGS);-DCMAKE_BUILD_TYPE=RelWithDebInfo;-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags);-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF" \
-	-DBOOTSTRAP_RUNTIMES_CMAKE_ARGS="-DCMAKE_C_FLAGS=$(STAGE_2_CFLAGS);-DCMAKE_CXX_FLAGS=$(RUNTIMES_CXXFLAGS);-DCMAKE_Fortran_FLAGS=$(STAGE_2_FORTRAN_FLAGS);-DCMAKE_EXE_LINKER_FLAGS=$(STAGE_2_LDFLAGS) -L$(STAGE_1_LIB_DIR);-DCMAKE_SHARED_LINKER_FLAGS=$(STAGE_2_LDFLAGS) -L$(STAGE_1_LIB_DIR);-DCMAKE_MODULE_LINKER_FLAGS=$(STAGE_2_LDFLAGS) -L$(STAGE_1_LIB_DIR);-DCMAKE_BUILD_TYPE=RelWithDebInfo;-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_Fortran_FLAGS_RELWITHDEBINFO=$(STAGE_2_FORTRAN_OPT_FLAGS);-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF"  || tail -100 build-llvm/CMakeFiles/CMakeConfigureLog.yaml
+	-DBOOTSTRAP_BUILTINS_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_2_CFLAGS),$(STAGE_2_CXXFLAGS),$(STAGE_2_LDFLAGS),RelWithDebInfo,-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags))" \
+	-DBOOTSTRAP_RUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_2_CFLAGS),$(RUNTIMES_CXXFLAGS),$(STAGE_2_LDFLAGS) -L$(STAGE_1_LIB_DIR),RelWithDebInfo,-DCMAKE_Fortran_FLAGS=$(STAGE_2_FORTRAN_FLAGS);-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_Fortran_FLAGS_RELWITHDEBINFO=$(STAGE_2_FORTRAN_OPT_FLAGS))"  || tail -100 build-llvm/CMakeFiles/CMakeConfigureLog.yaml
 
 	FOUND_VERSION=`grep LLVM_VERSION_STRING build-llvm/include/llvm/Config/llvm-config.h|cut -d\" -f2`; \
 	if ! echo "$(LLVM_VERSION_FULL)"|grep -q "$$FOUND_VERSION"; then \
@@ -1211,13 +1241,17 @@ endif
 	@mkdir -p stamps
 	touch $@
 
+# Set ninja verbosity flag (-v for verbose, empty for terse)
 VERBOSE=-v
+ifneq (,$(filter terse,$(DEB_BUILD_OPTIONS)))
+	VERBOSE=
+endif
 
 stamps/debian-full-build: stamps/configure
 	echo "Using cmake: $(CMAKE_BIN)"
 # linker hack so stage2 can link against stage1 libs at runtime
 	LD_LIBRARY_PATH=$(STAGE_1_LIB_DIR):$$LD_LIBRARY_PATH \
-	VERBOSE=1 CMAKE_BUILD_PARALLEL_LEVEL=$(NJOBS) \
+	$(CMAKE_VERBOSE_FLAG) CMAKE_BUILD_PARALLEL_LEVEL=$(NJOBS) \
 	  $(TIME_COMMAND) $(PRE_PROCESS) $(CMAKE_BIN) --build $(TARGET_BUILD) --target stage2
 
 # Check the stage 2 build worked
@@ -1262,11 +1296,7 @@ ifeq ($(LIBCLC_ENABLE),yes)
 	$(SCCACHE_CMAKE) \
 	-DCMAKE_C_COMPILER=$(STAGE_2_BIN_DIR)/clang \
 	-DCMAKE_CXX_COMPILER=$(STAGE_2_BIN_DIR)/clang++ \
-	-DCMAKE_C_FLAGS="$(opt_flags) $(STAGE_2_CFLAGS)" \
-	-DCMAKE_CXX_FLAGS="$(opt_flags) $(STAGE_2_CXXFLAGS) -I$(BASE_PATH)/llvm/include" \
-	-DCMAKE_SHARED_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
-	-DCMAKE_MODULE_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
-	-DCMAKE_EXE_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
+	$(call CMAKE_FLAGS,$(opt_flags) $(STAGE_2_CFLAGS),$(opt_flags) $(STAGE_2_CXXFLAGS) -I$(BASE_PATH)/llvm/include,$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)) \
 	-DCMAKE_INSTALL_PREFIX=/usr \
 	-DCMAKE_INSTALL_DATADIR=lib \
 	-DCMAKE_INSTALL_INCLUDEDIR=include \
@@ -1299,11 +1329,7 @@ build-mingw/compiler-rt-%: stamps/debian-full-build
 		-DCMAKE_ASM_COMPILER_TARGET=$(cpu)-w64-windows-gnu \
 		-DCMAKE_C_COMPILER=$(STAGE_2_BIN_DIR)/clang \
 		-DCMAKE_CXX_COMPILER=$(STAGE_2_BIN_DIR)/clang++ \
-		-DCMAKE_C_FLAGS="$(opt_flags)" \
-		-DCMAKE_CXX_FLAGS="$(opt_flags)" \
-		-DCMAKE_SHARED_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
-		-DCMAKE_MODULE_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
-		-DCMAKE_EXE_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
+		$(call CMAKE_FLAGS,$(opt_flags),$(opt_flags),$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)) \
 		-DCMAKE_INSTALL_PREFIX=/$(LLVM_DIR)/lib/clang/$(LLVM_VERSION) \
 		-DCMAKE_INSTALL_DATADIR=lib \
 		-DCMAKE_INSTALL_INCLUDEDIR=include \
@@ -1332,11 +1358,7 @@ build-wasm/compiler-rt-%: stamps/debian-full-build
 		-DCMAKE_ASM_COMPILER_TARGET=$(cpu)-unknown-unknown \
 		-DCMAKE_C_COMPILER=$(STAGE_2_BIN_DIR)/clang \
 		-DCMAKE_CXX_COMPILER=$(STAGE_2_BIN_DIR)/clang++ \
-		-DCMAKE_C_FLAGS="$(opt_flags) $(STAGE_2_WASM_CFLAGS)" \
-		-DCMAKE_CXX_FLAGS="$(opt_flags) $(STAGE_2_WASM_CXXFLAGS)" \
-		-DCMAKE_SHARED_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
-		-DCMAKE_MODULE_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
-		-DCMAKE_EXE_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
+		$(call CMAKE_FLAGS,$(opt_flags) $(STAGE_2_WASM_CFLAGS),$(opt_flags) $(STAGE_2_WASM_CXXFLAGS),$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)) \
 		-DCMAKE_INSTALL_PREFIX=/$(LLVM_DIR)/lib/clang/$(LLVM_VERSION) \
 		-DCMAKE_INSTALL_DATADIR=lib \
 		-DCMAKE_INSTALL_INCLUDEDIR=include \
@@ -1396,11 +1418,7 @@ build-wasm/libcxx-%-wasi: build-wasm/compiler-rt-%
 		-DCMAKE_CXX_COMPILER=$(STAGE_2_BIN_DIR)/clang++ \
 		-DCMAKE_AR=$(STAGE_2_BIN_DIR)/llvm-ar \
 		-DCMAKE_RANLIB=$(STAGE_2_BIN_DIR)/llvm-ranlib \
-		-DCMAKE_C_FLAGS="$(opt_flags) $(STAGE_2_WASM_CFLAGS) -fno-stack-protector" \
-		-DCMAKE_CXX_FLAGS="$(opt_flags) $(STAGE_2_WASM_CXXFLAGS) -fno-stack-protector" \
-		-DCMAKE_SHARED_LINKER_FLAGS="$(LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
-		-DCMAKE_MODULE_LINKER_FLAGS="$(LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
-		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
+		$(call CMAKE_FLAGS,$(opt_flags) $(STAGE_2_WASM_CFLAGS) -fno-stack-protector,$(opt_flags) $(STAGE_2_WASM_CXXFLAGS) -fno-stack-protector,$(LDFLAGS) -L$(STAGE_2_LIB_DIR)) \
 		-DCMAKE_INSTALL_PREFIX=/$(LLVM_DIR) \
 		-DCMAKE_INSTALL_INCLUDEDIR=include/$(cpu)-wasi \
 		-DLLVM_LIBDIR_SUFFIX=/$(cpu)-wasi \
@@ -1513,8 +1531,9 @@ endif
 
 # Remove the copy of jquery. See bug #701087
 	for d in $(TARGET_BUILD_STAGE2)/docs/html/_static/ $(TARGET_BUILD_STAGE2)/tools/clang/docs/html/_static/ $(TARGET_BUILD_STAGE2)/tools/clang/tools/extra/docs/html/_static/; do \
-		cd $$d && rm -f jquery.js && ln -s /usr/share/javascript/jquery/jquery.js && cd -; \
-		cd $$d && rm -f underscore.js && ln -s /usr/share/javascript/underscore/underscore.js && cd -; \
+		rm -f $$d/jquery.js $$d/underscore.js; \
+		ln -s /usr/share/javascript/jquery/jquery.js $$d/jquery.js; \
+		ln -s /usr/share/javascript/underscore/underscore.js $$d/underscore.js; \
 	done
 
 	mkdir -p debian/man/
@@ -1643,15 +1662,11 @@ endif
 		DESTDIR=$(DEB_INST) ninja $(VERBOSE) -C libclc/build install; \
 	fi
 
-	if test -d build-wasm/compiler-rt-wasm32; then \
-		DESTDIR=$(DEB_INST) ninja $(VERBOSE) -C build-wasm/compiler-rt-wasm32 install; \
-	fi
-	if test -d build-wasm/compiler-rt-wasm64; then \
-		DESTDIR=$(DEB_INST) ninja $(VERBOSE) -C build-wasm/compiler-rt-wasm64 install; \
-	fi
-	if test -d build-wasm/libcxx-wasm32-wasi; then \
-		DESTDIR=$(DEB_INST) ninja $(VERBOSE) -C build-wasm/libcxx-wasm32-wasi install; \
-	fi
+	set -e; for dir in build-wasm/compiler-rt-wasm32 build-wasm/compiler-rt-wasm64 build-wasm/libcxx-wasm32-wasi; do \
+		if test -d $$dir; then \
+			DESTDIR=$(DEB_INST) ninja $(VERBOSE) -C $$dir install; \
+		fi; \
+	done
 
 	set -e; for arch in x86_64 i686 armv7 aarch64; do \
 		if test -d build-mingw/compiler-rt-$${arch}; then \
@@ -1702,27 +1717,16 @@ endif
 # Disable CMake's LLVMExports package validation checks for target files that we may remove.
 	sed -i \
 	  -e '/_\(cmake_import_check_targets\|IMPORT_CHECK_TARGETS\) \(Polly\|sancov\|llvm-omp-device-info\|omptarget\|omp\)/ {s|^|#|}' \
-	  $(DEB_INST)/$(LLVM_DIR)/lib/cmake/llvm/LLVMExports-*.cmake
-
-# the obscure libLLVM.so.1 file ...
-	sed -i \
 	  -e '/_\(cmake_import_check_targets\|IMPORT_CHECK_TARGETS\) LLVM/ {s|^|#|}' \
 	  -e '/_\(cmake_import_check_targets\|IMPORT_CHECK_TARGETS\)_.*\/libLLVM\.so\.1.*/ {s|^|#|}' \
-	  $(DEB_INST)/$(LLVM_DIR)/lib/cmake/llvm/LLVMExports-*.cmake
-
-# Also disable mlir-* checks in the cmake
-	sed -i \
 	  -e '/_\(cmake_import_check_targets\|IMPORT_CHECK_TARGETS\) \(mlir-\|MLIR\)/ {s|^|#|}' \
+	  -e '/_\(cmake_import_check_files_for\|IMPORT_CHECK_FILES_FOR\)_.*\/bin\/.*/ {s|^|#|}' \
+	  -e '/_\(cmake_import_check_files_for\|IMPORT_CHECK_FILES_FOR\)_\(mlir\|Polly\|MLIR\|omp\|omptarget\)/ {s|^|#|}' \
 	  $(DEB_INST)/$(LLVM_DIR)/lib/cmake/llvm/LLVMExports-*.cmake
 
 	sed -i \
 	  -e '/_\(cmake_import_check_files_for\|IMPORT_CHECK_FILES_FOR\)_.*\/bin\/.*/ {s|^|#|}' \
-	  $(DEB_INST)/$(LLVM_DIR)/lib/cmake/llvm/LLVMExports-*.cmake \
-	  $(DEB_INST)/$(LLVM_DIR)/lib/cmake/clang/ClangTargets-*.cmake
-
-	sed -i \
 	  -e '/_\(cmake_import_check_files_for\|IMPORT_CHECK_FILES_FOR\)_\(mlir\|Polly\|MLIR\|omp\|omptarget\)/ {s|^|#|}' \
-	  $(DEB_INST)/$(LLVM_DIR)/lib/cmake/llvm/LLVMExports-*.cmake \
 	  $(DEB_INST)/$(LLVM_DIR)/lib/cmake/clang/ClangTargets-*.cmake
 
 	: # Fix the python lldb installation
@@ -1796,10 +1800,9 @@ endif
 		>> $(DEB_INST)/$(LLVM_DIR)/share/clang/bash-autocomplete.sh
 
 # Python code removals
-	rm -vf $(DEB_INST)/$(LLVM_DIR)/lib/python*/*-packages/six.py
-	rm -vf $(DEB_INST)/$(LLVM_DIR)/local/lib/python*/*-packages/six.py
-	find $(DEB_INST)/$(LLVM_DIR) -type d -name __pycache__ | xargs -r rm -vrf
-	find $(DEB_INST)/$(LLVM_DIR) -type f -name '*.pyc' | xargs -r rm -vf
+	rm -vf $(DEB_INST)/$(LLVM_DIR)/lib/python*/*-packages/six.py \
+	       $(DEB_INST)/$(LLVM_DIR)/local/lib/python*/*-packages/six.py
+	find $(DEB_INST)/$(LLVM_DIR) \( -type d -name __pycache__ -o -type f -name '*.pyc' \) | xargs -r rm -vrf
 
 	: # fix lintian warnings for non-script python files
 	-chmod a-x $(d)/$(LLVM_DIR)/build/utils/lit/lit/main.py \
@@ -1977,14 +1980,13 @@ else
 endif
 
 override_dh_install:
-	: # fix libLLVM.so.1 install, install it under the SONAME
+	: # fix libLLVM.so install, install it under the SONAME
 	-ls -l debian/tmp/$(LLVM_DIR)/lib/libLLVM*.so*
-	test -f debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.1
 
-	if [ -f debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.1 ] && [ ! -h debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.1 ]; then \
-	  soname=$$(objdump -p debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.1 | awk '/ *SONAME / {print $$2}'); \
+	if [ -f debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.$(SONAME_EXT) ] && [ ! -h debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.$(SONAME_EXT) ]; then \
+	  soname=$$(objdump -p debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.$(SONAME_EXT) | awk '/ *SONAME / {print $$2}'); \
 	  rm -f debian/tmp/$(LLVM_DIR)/lib/$$soname; \
-	  mv debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.1 debian/tmp/$(LLVM_DIR)/lib/$$soname; \
+	  mv debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.$(SONAME_EXT) debian/tmp/$(LLVM_DIR)/lib/$$soname; \
 	  ln -sf $$soname debian/tmp/$(LLVM_DIR)/lib/libLLVM-$(LLVM_VERSION).so; \
 	  ln -sf $$soname debian/tmp/$(LLVM_DIR)/lib/libLLVM.so; \
 	fi

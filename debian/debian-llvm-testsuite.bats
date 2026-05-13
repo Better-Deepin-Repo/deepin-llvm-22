@@ -852,7 +852,7 @@ EOF
     mkdir -p "${cmake_test_dir}"
 
     cat > "${cmake_test_dir}/CMakeLists.txt" <<EOF
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 project(test)
 find_package(ZLIB)
 EOF
