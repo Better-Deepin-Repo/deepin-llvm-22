@@ -1372,8 +1372,8 @@ override_dh_auto_build: \
   $(if $(filter %-dev-win, $(packages)),stamps/debian-mingw-build) \
   stamps/sccache-stats
 
-override_dh_prep: stamps/build_doc
-	dh_prep
+override_dh_prep:
+	:
 
 ifeq ($(DOC_GENERATION), no)
 stamps/build_doc: stamps/debian-full-build
@@ -1445,6 +1445,7 @@ endif
 endif
 
 override_dh_auto_install:
+	mkdir -p $(TARGET_BUILD)/tools/clang/stage2-bins/docs/ocamldoc/html/
 ifeq ($(SMALL_DISK),yes)
 	# Clean up temporary files to make sure the install works
 	rm -rf $(find $(TARGET_BUILD) -wholename '*CMakeFiles*' -not -name CMakeLists.txt -a -name "*.dir" -type d)
