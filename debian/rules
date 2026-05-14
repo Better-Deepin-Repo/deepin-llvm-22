@@ -1366,6 +1366,7 @@ stamps/sccache-stats:
 
 override_dh_auto_build: \
   stamps/debian-full-build \
+  stamps/build_doc \
   $(if $(filter libfuzzer-%, $(packages)),stamps/debian-libfuzzer-build) \
   $(if $(filter libclc-%, $(packages)),stamps/debian-libclc-build) \
   $(if $(filter %-wasm32 %-wasm64, $(packages)),stamps/debian-wasm-build) \
@@ -1439,7 +1440,7 @@ endif
 
 	if test "$(OPENMP_ENABLE)" = yes; then \
 		cd openmp/runtime && doxygen doc/doxygen/config; cd -; \
-		cd openmp/runtime/doc/doxygen/generated/html/ && rm jquery.js && ln -s /usr/share/javascript/jquery/jquery.js; \
+		cd openmp/runtime/doc/doxygen/generated/html/ && rm -f jquery.js && ln -s /usr/share/javascript/jquery/jquery.js; \
 	fi
 	touch $@
 endif
@@ -1629,19 +1630,37 @@ endif
 # Manage the polly files. Sometimes, we build them. Sometimes not.
 	if test "$(POLLY_ENABLE)" = yes; then \
 		mkdir -p debian/libclang-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/ \
+		  debian/libpolly-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/ \
 		  debian/libpolly-$(LLVM_VERSION)-dev/$(LLVM_DIR)/include/polly/; \
-		mv -f $(DEB_INST)/$(LLVM_DIR)/lib/libPolly* \
-		  debian/libpolly-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/; \
+		if ls $(DEB_INST)/$(LLVM_DIR)/lib/libPolly* >/dev/null 2>&1; then \
+			mv -f $(DEB_INST)/$(LLVM_DIR)/lib/libPolly* \
+			  debian/libpolly-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/; \
+		fi; \
 		rm -rf debian/libpolly-$(LLVM_VERSION)-dev/$(LLVM_DIR)/include/polly; \
-		mv -f $(DEB_INST)/$(LLVM_DIR)/include/polly/ \
-		  debian/libpolly-$(LLVM_VERSION)-dev/$(LLVM_DIR)/include/; \
+		if test -d $(DEB_INST)/$(LLVM_DIR)/include/polly; then \
+			mv -f $(DEB_INST)/$(LLVM_DIR)/include/polly/ \
+			  debian/libpolly-$(LLVM_VERSION)-dev/$(LLVM_DIR)/include/; \
+		fi; \
 	fi
 
 	mkdir -p debian/usr/share/doc/llvm-$(LLVM_VERSION)-doc/ debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/
 	if test "$(DOC_GENERATION)" = yes; then \
-		cp -R $(TARGET_BUILD_STAGE2)/docs/html debian/usr/share/doc/llvm-$(LLVM_VERSION)-doc/; \
-		cp -R $(TARGET_BUILD_STAGE2)/tools/clang/docs/html debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/; \
-		cp -R $(TARGET_BUILD_STAGE2)/tools/clang/tools/extra/docs/html debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/clang-extra; \
+		if test -d $(TARGET_BUILD_STAGE2)/docs/html; then \
+			cp -R $(TARGET_BUILD_STAGE2)/docs/html debian/usr/share/doc/llvm-$(LLVM_VERSION)-doc/; \
+		else \
+			mkdir -p llvm/docs/_build/html; \
+		fi; \
+		if test -d $(TARGET_BUILD_STAGE2)/tools/clang/docs/html; then \
+			cp -R $(TARGET_BUILD_STAGE2)/tools/clang/docs/html debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/; \
+		else \
+			mkdir -p clang/docs/_build/html; \
+		fi; \
+		if test -d $(TARGET_BUILD_STAGE2)/tools/clang/tools/extra/docs/html; then \
+			cp -R $(TARGET_BUILD_STAGE2)/tools/clang/tools/extra/docs/html debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/clang-extra; \
+		else \
+			mkdir -p tools/clang/tools/extra/docs/html; \
+		fi; \
+		mkdir -p openmp/runtime/doc/doxygen/generated/html/; \
 	else \
 		mkdir -p llvm/docs/_build/html clang/docs/_build/html/ tools/clang/tools/extra/docs/html openmp/runtime/doc/doxygen/generated/html/ debian/man/ clang/docs/_build/man/ llvm/docs/_build/man/; \
 		rm -f debian/*$(LLVM_VERSION)*manpages; \
@@ -1881,6 +1900,10 @@ override_dh_install:
 	  mv debian/tmp/$(LLVM_DIR)/lib/libLLVM.so.$(SONAME_EXT) debian/tmp/$(LLVM_DIR)/lib/$$soname; \
 	  ln -sf $$soname debian/tmp/$(LLVM_DIR)/lib/libLLVM-$(LLVM_VERSION).so; \
 	  ln -sf $$soname debian/tmp/$(LLVM_DIR)/lib/libLLVM.so; \
+	fi
+
+	if ! ls debian/tmp/$(LLVM_DIR)/lib/libPolly*.a >/dev/null 2>&1; then \
+		sed -i '\|^$(LLVM_DIR)/lib/libPolly\*\.a$$|d' debian/libpolly-$(LLVM_VERSION)-dev.install; \
 	fi
 
 ifeq (${POLLY_ENABLE},yes)
