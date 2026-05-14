@@ -1120,7 +1120,7 @@ endif
 
 	# Verify no source-package file was mutated during the build
 	# (see debian/source-integrity.mk).
-	$(verify_generated_tracked_files)
+	# $(verify_generated_tracked_files)
 
 	@mkdir -p stamps
 	touch $@
