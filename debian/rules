@@ -268,7 +268,7 @@ ANY_ARCHS := amd64 arm64 armel armhf hurd-amd64 hurd-i386 i386 loong64 m68k \
 	mipsel mips64el powerpc ppc64 ppc64el riscv64 s390x sparc sparc64 x32
 
 MULTILIB_ARCHS := amd64 i386 mips64 mips64el mipsel powerpc ppc64 s390x sparc sparc64 x32
-ifeq (,$(filter $(DISTRO), bionic focal jammy noble buster bullseye bookworm trixie))
+ifeq (,$(filter $(DISTRO), bionic focal jammy noble buster bullseye bookworm trixie crimson))
     MULTILIB_ARCHS := $(filter-out s390x, $(MULTILIB_ARCHS))
 endif
 
@@ -476,7 +476,7 @@ endif
 ifneq (,$(filter $(DEB_HOST_ARCH),ppc64el))
   STAGE_ALL_CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=powerpc64le-linux-gnu
 endif
-ifeq (,$(filter $(DISTRO), stretch buster bullseye bookworm trixie xenial bionic focal jammy noble oracular plucky))
+ifeq (,$(filter $(DISTRO), stretch buster bullseye bookworm trixie xenial bionic focal jammy noble oracular plucky crimson))
   # apparently, LLVM cannot have support for both ppc64 and ppc64el
   ifeq (,$(filter $(DEB_HOST_ARCH),powerpc ppc64))
     STAGE_ALL_CMAKE_EXTRA += -DPPC_LINUX_DEFAULT_IEEELONGDOUBLE=ON
@@ -888,7 +888,7 @@ OCAML_ENABLE = no
 OCAML_ARCHS = amd64 arm64 ppc64el riscv64 s390x
 OCAML_RELEASES = stretch buster bullseye bookworm trixie forky \
 	precise trusty xenial bionic focal jammy noble plucky questing \
-	resolute stonking
+	resolute stonking crimson
 ifneq (,$(filter $(DISTRO), $(OCAML_RELEASES)))
   ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
   # Enable OCAML for this arch.
