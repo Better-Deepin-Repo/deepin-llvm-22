@@ -86,3 +86,4 @@ bolt-disable-proc-check.diff
 lower-flang-py-dep.diff
 revert-issue-139220.diff
 disable-omptest.diff
+ubuntu-stonking.diff

@@ -585,7 +585,7 @@ HWASAN_ARCHS = amd64 arm64 i386 riscv64 x32
 LLD_ARCHS := amd64 arm64 armel armhf i386 mipsel mips64el ppc64el s390x sparc m68k ppc64 sparc64 x32 riscv64 loong64
 # some lld archs are unusable for the bootstrap
 LLD_BUILD_ARCHS := $(filter-out m68k mipsel mips64el ppc64 sparc sparc64 x32, $(LLD_ARCHS))
-LLD_INSTALLED := $(shell dpkg-query -W -f='$${Status}\n' lld >/dev/null 2>&1 ; echo yes)
+LLD_INSTALLED := $(shell dpkg-query -W -f='$${Status}\n' lld 2>/dev/null | grep -q "install ok installed" && echo yes || echo no)
 
 # don't use gold anymore, but the BFD linker instead on these archs
 BINUTILS_ARCHS := alpha m68k mipsel mips64el powerpc ppc64 sparc sparc64 x32 hurd-i386 hurd-amd64
@@ -609,6 +609,10 @@ endif
 ifneq ($(USE_LLD),yes)
     ifneq (,$(filter $(DEB_HOST_ARCH),$(BINUTILS_ARCHS)))
         # no extra options needed
+    else ifneq (,$(filter $(DEB_HOST_ARCH),$(LLD_BUILD_ARCHS)))
+        # lld would normally be used here but isn't installed; fall back
+        # to the system default linker rather than aborting the build.
+        $(warning lld is not installed on $(DEB_HOST_ARCH); using the system default linker)
     else
         $(error unknown build linker for architecture $(DEB_HOST_ARCH))
     endif
@@ -883,7 +887,8 @@ DH_OPTIONS = python3
 OCAML_ENABLE = no
 OCAML_ARCHS = amd64 arm64 ppc64el riscv64 s390x
 OCAML_RELEASES = stretch buster bullseye bookworm trixie forky \
-	precise trusty xenial bionic focal jammy noble plucky questing resolute
+	precise trusty xenial bionic focal jammy noble plucky questing \
+	resolute stonking
 ifneq (,$(filter $(DISTRO), $(OCAML_RELEASES)))
   ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
   # Enable OCAML for this arch.
@@ -1120,7 +1125,7 @@ endif
 
 	# Verify no source-package file was mutated during the build
 	# (see debian/source-integrity.mk).
-	# $(verify_generated_tracked_files)
+	$(verify_generated_tracked_files)
 
 	@mkdir -p stamps
 	touch $@
@@ -1373,8 +1378,8 @@ override_dh_auto_build: \
   $(if $(filter %-dev-win, $(packages)),stamps/debian-mingw-build) \
   stamps/sccache-stats
 
-override_dh_prep:
-	:
+override_dh_prep: stamps/build_doc
+	dh_prep
 
 ifeq ($(DOC_GENERATION), no)
 stamps/build_doc: stamps/debian-full-build

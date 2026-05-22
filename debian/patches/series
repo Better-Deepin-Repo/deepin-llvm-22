@@ -139,6 +139,7 @@ bolt-disable-proc-check.diff
 lower-flang-py-dep.diff
 revert-issue-139220.diff
 disable-omptest.diff
+ubuntu-stonking.diff
 
 # only apply this patch for Ubuntu 25.10 or newer
 #ubuntu-clang-use-RVA23U64-profile.patch

@@ -1,5 +1,25 @@
+llvm-toolchain-22 (1:22.1.6-1) unstable; urgency=medium
+
+  [ Matthias Klose ]
+  * Make stonking a known Ubuntu series.
+  * Build OCaml for stonking.
+
+  [ Sylvestre Ledru ]
+  * New upstream release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 19 May 2026 17:53:28 +0200
+
 llvm-toolchain-22 (1:22.1.5-1) unstable; urgency=medium
 
+  * d/rules: Fix LLD_INSTALLED detection. The previous shell snippet
+    always returned "yes" because `; echo yes` ran unconditionally,
+    so -DLLVM_USE_LINKER=lld was passed to CMake even when lld was
+    not installed (e.g. on Ubuntu questing where the lld build-dep
+    alternative resolved to `hello`), leading to a cryptic
+    "collect2: fatal error: cannot find 'ld'" failure. When lld is
+    not installed on an LLD_BUILD_ARCHS arch, warn and fall back to
+    the system default linker instead of aborting with "unknown
+    build linker".
   * New upstream release
   * d/rules: Fail the build if debian/control is regenerated, except for
     apt.llvm.org snapshot builds where the substitutions legitimately
