@@ -2,10 +2,10 @@
  lldb/source/API/CMakeLists.txt |   14 +++++++-------
  1 file changed, 7 insertions(+), 7 deletions(-)
 
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/lldb/source/API/CMakeLists.txt
+Index: llvm-toolchain-22_22.1.7/lldb/source/API/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/lldb/source/API/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/lldb/source/API/CMakeLists.txt
+--- llvm-toolchain-22_22.1.7.orig/lldb/source/API/CMakeLists.txt
++++ llvm-toolchain-22_22.1.7/lldb/source/API/CMakeLists.txt
 @@ -40,7 +40,12 @@ add_custom_target(lldb-sbapi-dwarf-enums
    DEPENDS ${sb_languages_file})
  set_target_properties(lldb-sbapi-dwarf-enums PROPERTIES FOLDER "LLDB/Tablegenning")
@@ -20,7 +20,7 @@ Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/lldb/source/API/
    SBAddress.cpp
    SBAddressRange.cpp
    SBAddressRangeList.cpp
-@@ -198,7 +203,7 @@ endif()
+@@ -201,7 +206,7 @@ endif()
  
  set_target_properties(liblldb
    PROPERTIES
@@ -29,22 +29,22 @@ Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/lldb/source/API/
  )
  
  target_compile_definitions(liblldb PRIVATE LLDB_IN_LIBLLDB)
-@@ -262,12 +267,12 @@ elseif (LLDB_EXPORT_ALL_SYMBOLS)
+@@ -265,12 +270,12 @@ elseif (LLDB_EXPORT_ALL_SYMBOLS)
    add_llvm_symbol_exports(liblldb ${exported_symbol_file})
  endif()
  
--if (NOT MSVC)
+-if(NOT WIN32 OR MINGW)
 -  set_target_properties(liblldb
 -    PROPERTIES
 -    OUTPUT_NAME lldb
 -  )
 -endif()
-+#if (NOT MSVC)
-+#  set_target_properties(liblldb
-+#    PROPERTIES
-+#    OUTPUT_NAME lldb
-+#    )
-+#endif()
++# if(NOT WIN32 OR MINGW)
++#   set_target_properties(liblldb
++#     PROPERTIES
++#     OUTPUT_NAME lldb
++#   )
++# endif()
  
  # The Clang expression parser in LLDB requires the Clang resource directory to function.
  if (TARGET clang-resource-headers)
