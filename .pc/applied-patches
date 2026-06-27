@@ -69,6 +69,7 @@ compiler-rt/emutls-win32-winnt-vista.diff
 wasm/wasm-ld-path.diff
 wasm/wasm-compiler-rt-default.diff
 wasm/wasm-sysroot-usr.diff
+wasm/fix-wasi-path-search.patch
 revert-update-doc.diff
 unwind-force-pthread-dl.diff
 compiler-rt-float16-arch-check.diff

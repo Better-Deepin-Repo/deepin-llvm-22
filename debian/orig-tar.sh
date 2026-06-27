@@ -180,6 +180,13 @@ if test -n "$RCRELEASE" -o -n "$BRANCH"; then
     EXTRA_DCH_FLAGS="--force-bad-version --allow-lower-version"
 fi
 
-dch $EXTRA_DCH_FLAGS --distribution $DISTRIBUTION --newversion 1:"$VERSION"-1~exp1 "New snapshot release"
+# A dot release is a final/stable release without an rc tag (ex: 22.1.7)
+if test -n "$FINAL_RELEASE" -a -z "$TAG"; then
+    CHANGELOG_MSG="New upstream release"
+else
+    CHANGELOG_MSG="New snapshot release"
+fi
+
+dch $EXTRA_DCH_FLAGS --distribution $DISTRIBUTION --newversion 1:"$VERSION"-1~exp1 "$CHANGELOG_MSG"
 
 exit 0

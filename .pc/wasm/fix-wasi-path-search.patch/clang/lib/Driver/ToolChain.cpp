@@ -717,10 +717,6 @@ StringRef ToolChain::getOSLibName() const {
     return "sunos";
   case llvm::Triple::AIX:
     return "aix";
-  case llvm::Triple::WASIp1:
-  case llvm::Triple::WASIp2:
-  case llvm::Triple::WASIp3:
-    return "wasi";
   default:
     return getOS();
   }

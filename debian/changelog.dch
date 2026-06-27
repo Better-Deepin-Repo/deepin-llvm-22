@@ -1,6 +1,5 @@
-llvm-toolchain-22 (1:22.1.8-1) unstable; urgency=medium
+llvm-toolchain-22 (1:22.1.7-3) UNRELEASED; urgency=medium
 
-  * New upstream release
   * lldb: ship a system-wide /etc/lldb/lldbinit, configuring the distro
     debuginfod server on Debian and Ubuntu.
     Thanks to Norbert Lange for the patch
@@ -20,7 +19,10 @@ llvm-toolchain-22 (1:22.1.8-1) unstable; urgency=medium
   [ Samuel Thibault ]
   * d/rules: Disable orc instead of disabling compiler-rt on hurd-amd64.
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 18 Jun 2026 17:26:30 +0200
+  [ Sylvestre Ledru ]
+  * 
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 18 Jun 2026 17:23:43 +0200
 
 llvm-toolchain-22 (1:22.1.7-1) unstable; urgency=medium
 

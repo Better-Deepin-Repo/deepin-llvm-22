@@ -966,8 +966,12 @@ skip_if_arch() {
     run file "${BATS_TMPDIR}/wasm_cout"
     assert_output -p "WebAssembly"
 
+    # bug 1138702
+    touch test.c
+    clang-$VERSION --target=wasm32-wasip1 test.c
+
     # Clean up
-    rm -f "${BATS_TMPDIR}/wasm_cout_test.cpp" "${BATS_TMPDIR}/wasm_cout"
+    rm -f "${BATS_TMPDIR}/wasm_cout_test.cpp" "${BATS_TMPDIR}/wasm_cout" test.c
 }
 
 # ===================== sanitizers

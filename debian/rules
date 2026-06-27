@@ -383,6 +383,15 @@ ifeq ($(DERIVATIVE),Ubuntu)
     Z3_ARCHS :=
   endif
 endif
+# LLVM requires Z3 >= 4.8.9. These releases ship an older libz3-dev (bionic 4.4,
+# buster/focal 4.8.7), which makes LLVM_ENABLE_Z3_SOLVER=ON fail at configure
+# time ("Could NOT find Z3 ... but required is at least 4.8.9"), so disable the
+# Z3 solver and drop its build-dep there.
+Z3_DISABLE_DISTRO := focal
+ifneq (,$(filter $(DISTRO), $(Z3_DISABLE_DISTRO)))
+  Z3_ARCHS :=
+  $(info Z3 solver disabled for $(DISTRO) (libz3 < 4.8.9))
+endif
 ifneq (,$(Z3_ARCHS))
   Z3_DEV_DEP = libz3-dev [$(Z3_ARCHS)],
 endif
@@ -527,9 +536,7 @@ ifneq (,$(filter $(DEB_HOST_ARCH),x32))
 endif
 
 ifneq (,$(filter $(DEB_HOST_ARCH),hurd-amd64))
-  STAGE_ALL_CMAKE_EXTRA += -DCOMPILER_RT_BUILD_BUILTINS=OFF
-  COMPILER_RT_USE_BUILTINS_LIBRARY := OFF
-  LIBCXX_USE_COMPILER_RT := OFF
+  STAGE_ALL_CMAKE_EXTRA += -DCOMPILER_RT_BUILD_ORC=OFF
 endif
 
 ifeq ($(call check_pkg_version,g++-$(GCC_VERSION),ge,4.8-20121128-1~),yes)
@@ -793,6 +800,12 @@ LLDB_ARCHS := amd64 arm64 armel armhf i386 loong64 m68k ppc64el riscv64 s390x x3
 ifneq (,$(filter $(DEB_HOST_ARCH),$(LLDB_ARCHS)))
 	STAGE_ALL_CMAKE_EXTRA += -DLLDB_ENABLE_LUA=OFF
 	PROJECTS+=;lldb
+
+	ifeq ($(VENDOR),Ubuntu)
+		LLDB_DEBUGINFOD := https://debuginfod.ubuntu.com/
+	else ifeq ($(VENDOR),Debian)
+		LLDB_DEBUGINFOD := https://debuginfod.debian.net/
+	endif
 endif
 
 ifneq (,$(filter $(DEB_HOST_ARCH),i386 amd64))
@@ -889,7 +902,7 @@ OCAML_ENABLE = no
 OCAML_ARCHS = amd64 arm64 ppc64el riscv64 s390x
 OCAML_RELEASES = stretch buster bullseye bookworm trixie forky \
 	precise trusty xenial bionic focal jammy noble plucky questing \
-	resolute stonking crimson
+	resolute stonking
 ifneq (,$(filter $(DISTRO), $(OCAML_RELEASES)))
   ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
   # Enable OCAML for this arch.
@@ -931,14 +944,23 @@ SCCACHE_ENABLE=no
 SCCACHE_CMAKE =
 # if sccache is installed in the chroot, use it
 ifeq ($(shell test -e /opt/sccache/sccache && echo -n yes),yes)
-	ifneq (,$(filter $(DEB_HOST_ARCH),i386 amd64 s390x))
-		STAGE_1_CMAKE_EXTRA += $(SCCACHE_CMAKE)
-		SCCACHE_ENABLE=yes
-		SCCACHE_PATH=/opt/sccache/
-		SCCACHE_CMD=$(SCCACHE_PATH)/sccache
-		SCCACHE_CMAKE = -DCMAKE_C_COMPILER_LAUNCHER=$(SCCACHE_CMD) -DCMAKE_CXX_COMPILER_LAUNCHER=$(SCCACHE_CMD)
-		export LD_LIBRARY_PATH=$$LD_LIBRARY_PATH:/opt/sccache
-	endif
+  ifneq (,$(filter $(DEB_HOST_ARCH),i386 amd64 s390x arm64))
+    STAGE_1_CMAKE_EXTRA += $(SCCACHE_CMAKE)
+    SCCACHE_ENABLE=yes
+    SCCACHE_PATH=/opt/sccache/
+    SCCACHE_CMD=$(SCCACHE_PATH)/sccache
+    SCCACHE_CMAKE = -DCMAKE_C_COMPILER_LAUNCHER=$(SCCACHE_CMD) -DCMAKE_CXX_COMPILER_LAUNCHER=$(SCCACHE_CMD)
+    export LD_LIBRARY_PATH=$$LD_LIBRARY_PATH:/opt/sccache
+    # The build dir name embeds a date+hash and changes on every snapshot,
+    # so absolute paths differ each build and defeat the cache. SCCACHE_BASEDIR
+    # rewrites paths under it to relative ones before hashing, restoring hits.
+    # Note: SCCACHE_BASEDIR was introduced in sccache 0.14.
+    export SCCACHE_BASEDIR=$(CURDIR)
+    SCCACHE_VERSION := $(shell $(SCCACHE_CMD) --version 2>/dev/null | head -n1 | cut -d' ' -f2)
+    ifneq ($(shell printf '0.14.0\n%s\n' "$(SCCACHE_VERSION)" | sort -V | head -n1),0.14.0)
+    $(warning sccache '$(SCCACHE_VERSION)' is too old: SCCACHE_BASEDIR requires sccache >= 0.14; cross-directory cache hits will not work)
+    endif
+  endif
 endif
 
 # enables cmake build targets like stage2-[target_name]
@@ -999,6 +1021,7 @@ stamps/preconfigure:
 	@echo "COMPILER_RT_WASM_ENABLE=$(COMPILER_RT_WASM_ENABLE)"
 	@echo "LIBCXX_WASM_ENABLE=$(LIBCXX_WASM_ENABLE)"
 	@echo "SCCACHE_ENABLE=$(SCCACHE_ENABLE)"
+	@echo "SCCACHE_BASEDIR=$(SCCACHE_BASEDIR)"
 	@echo "LLVM_SPIRV=$(LLVM_SPIRV)"
 	@echo "LLVM_SPIRV_INSTALLED=$(LLVM_SPIRV_INSTALLED)"
 	@echo "DOC_GENERATION=$(DOC_GENERATION)"
@@ -1244,7 +1267,7 @@ endif
 	-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF \
 	$(CMAKE_EXTRA) \
 	-DBUILTINS_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS))" \
-	-DRUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS),Release,-DCMAKE_Fortran_FLAGS=$(RUNTIMES_FORTRAN_FLAGS);-DFFI_STATIC_LIBRARIES=/usr/lib/$(DEB_HOST_MULTIARCH)/libffi.so)" \
+	-DRUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS),Release,-DCMAKE_Fortran_FLAGS=$(RUNTIMES_FORTRAN_FLAGS))" \
 	-DCLANG_ENABLE_BOOTSTRAP=ON \
 	-DCLANG_BOOTSTRAP_TARGETS="$(ENABLED_STAGE2_CMAKE_BUILD_TARGETS)" \
 	-DCLANG_BOOTSTRAP_PASSTHROUGH="CMAKE_INSTALL_PREFIX;CMAKE_SUPPRESS_REGENERATION;ENABLE_LINKER_BUILD_ID;LLVM_ENABLE_PIC;LLVM_ENABLE_RTTI;LLVM_INCLUDE_GO_TESTS;LLVM_USE_RELATIVE_PATHS_IN_FILES;CLANG_DEFAULT_LINKER;CLANG_DEFAULT_CXX_STDLIB;CLANG_DEFAULT_RTLIB;COMPILER_RT_USE_LIBCXX;COMPILER_RT_USE_BUILTINS_LIBRARY;COMPILER_RT_DEFAULT_TARGET_ONLY;COMPILER_RT_INCLUDE_TESTS;LIBUNWIND_USE_COMPILER_RT;LIBCXXABI_ENABLE_EXCEPTIONS;LIBCXXABI_USE_COMPILER_RT;LIBCXXABI_USE_LLVM_UNWINDER;LIBCXX_USE_COMPILER_RT;LIBCXX_ENABLE_EXCEPTIONS;LIBCXX_ENABLE_STATIC_ABI_LIBRARY;LIBCXX_STATICALLY_LINK_ABI_IN_STATIC_LIBRARY;LIBCXX_STATICALLY_LINK_ABI_IN_SHARED_LIBRARY;LIBOMP_ENABLE_RTTI;LLVM_TEMPORARILY_ALLOW_OLD_TOOLCHAIN;CLANG_FORCE_MATCHING_LIBCLANG_SOVERSION;CMAKE_C_COMPILER_LAUNCHER;CMAKE_CXX_COMPILER_LAUNCHER;LLVM_LIBC_GPU_BUILD;LLDB_GLOBAL_INIT_DIRECTORY" \
@@ -1252,7 +1275,6 @@ endif
 	-DBOOTSTRAP_CMAKE_C_FLAGS_RELWITHDEBINFO="$(opt_flags)" \
 	-DBOOTSTRAP_CMAKE_CXX_FLAGS_RELWITHDEBINFO="$(opt_flags)" \
 	$(call BOOTSTRAP_CMAKE_FLAGS,$(STAGE_2_CFLAGS),$(STAGE_2_CXXFLAGS),$(STAGE_2_LDFLAGS)) \
-	-DBOOTSTRAP_FFI_STATIC_LIBRARIES=/usr/lib/$(DEB_HOST_MULTIARCH)/libffi.so \
 	-DBOOTSTRAP_LLVM_ENABLE_FFI=ON \
 	-DBOOTSTRAP_LLVM_ENABLE_DUMP=ON \
 	-DBOOTSTRAP_LLVM_ENABLE_LIBPFM=ON \
@@ -1273,7 +1295,7 @@ endif
 	-DBOOTSTRAP_PYTHON_EXECUTABLE=/usr/bin/python3 \
 	$(BOOTSTRAP_CMAKE_EXTRA) \
 	-DBOOTSTRAP_BUILTINS_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_2_CFLAGS),$(STAGE_2_CXXFLAGS),$(STAGE_2_LDFLAGS),RelWithDebInfo,-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags))" \
-	-DBOOTSTRAP_RUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_2_CFLAGS),$(RUNTIMES_CXXFLAGS),$(STAGE_2_LDFLAGS) -L$(STAGE_1_LIB_DIR),RelWithDebInfo,-DCMAKE_Fortran_FLAGS=$(STAGE_2_FORTRAN_FLAGS);-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_Fortran_FLAGS_RELWITHDEBINFO=$(STAGE_2_FORTRAN_OPT_FLAGS);-DFFI_STATIC_LIBRARIES=/usr/lib/$(DEB_HOST_MULTIARCH)/libffi.so)"  || tail -100 build-llvm/CMakeFiles/CMakeConfigureLog.yaml
+	-DBOOTSTRAP_RUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_2_CFLAGS),$(RUNTIMES_CXXFLAGS),$(STAGE_2_LDFLAGS) -L$(STAGE_1_LIB_DIR),RelWithDebInfo,-DCMAKE_Fortran_FLAGS=$(STAGE_2_FORTRAN_FLAGS);-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_Fortran_FLAGS_RELWITHDEBINFO=$(STAGE_2_FORTRAN_OPT_FLAGS))"  || tail -100 build-llvm/CMakeFiles/CMakeConfigureLog.yaml
 
 	FOUND_VERSION=`grep LLVM_VERSION_STRING build-llvm/include/llvm/Config/llvm-config.h|cut -d\" -f2`; \
 	if ! echo "$(LLVM_VERSION_FULL)"|grep -q "$$FOUND_VERSION"; then \
@@ -1523,12 +1545,6 @@ ifeq (${LIBFUZZER_ENABLE},yes)
 	cp -v $(TARGET_BUILD)/libFuzzer.a debian/libfuzzer-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/
 endif
 endif
-
-# Because of hurd, we are more flexible in what we include in libclang-X.Y-rt
-# but we don't want to install wasi or windows files into libclang-rt as they
-# have their own package So, we remove this directory from the package
-	rm -f debian/libclang-rt-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/wasi/
-	rm -f debian/libclang-rt-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/windows/
 
 # Create this fake directory to make the install libclang-common-dev happy
 # under the unsupported archs of compiler-rt
@@ -1911,6 +1927,11 @@ ifeq ($(SKIP_COMMON_PACKAGES),yes)
 	done
 endif
 
+ifneq ($(LLDB_DEBUGINFOD),)
+	: # uncomment the debuginfod server and patch the URL
+	sed 's,^[# ]*\(settings set plugin.symbol-locator.debuginfod.server-urls\).*,\1 $(LLDB_DEBUGINFOD),' -i debian/lldbinit
+endif
+
 ifneq ($(SLOPPY_BUILD),yes)
 	dh_install --fail-missing ${skip_packages}
 else
@@ -1931,9 +1952,11 @@ ifneq (,$(filter libc++-$(LLVM_VERSION)-dev-wasm32, $(packages)))
 	fi
 endif
 # Because of hurd, we are more flexible in what we include in libclang-X.Y-rt
-# but we don't want to install wasi files into libclang-rt as they have their own package
-# So, we remove this directory from the package
+# but we don't want to install wasi or windows files into libclang-rt as they
+# have their own package
+# So, we remove these directories from the package
 	rm -fr debian/libclang-rt-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/clang/$(LLVM_VERSION)/lib/wasi/
+	rm -fr debian/libclang-rt-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/clang/$(LLVM_VERSION)/lib/windows/
 
 	if [ -d debian/llvm-$(LLVM_VERSION)/usr/share/doc/llvm-$(LLVM_VERSION) ]; then \
 	  for svg in usage-*.svg; do \
