@@ -188,6 +188,13 @@ else ifeq ($(DERIVATIVE),Debian)
     NEW_LLVM_VERSION = 23
   endif
 endif
+# deepin 25 (crimson) ships LLVM 23 as the default toolchain. The unversioned
+# common packages are provided by the newer LLVM 23 source package, so do not
+# build them from this LLVM 21 source.
+ifneq (,$(filter $(DISTRO), crimson))
+  SKIP_COMMON_PACKAGES = yes
+  NEW_LLVM_VERSION = 23
+endif
 # set these two when building without the common packages
 #SKIP_COMMON_PACKAGES = yes
 #NEW_LLVM_VERSION = 23
@@ -730,6 +737,12 @@ ifeq (,$(filter $(DEB_HOST_ARCH), $(OFFLOAD_ARCHS)))
   OFFLOAD_ENABLE=no
 else
   RUNTIMES += ;offload
+ifeq ($(DISTRO),crimson)
+# deepin 25 ships a non-PIC libffi.a, which cannot be linked into the shared
+# host offload plugin.  Prefer the shared libffi (also found by FindFFI) by
+# keeping FFI_STATIC_LIBRARIES empty for the runtimes build.
+  STAGE_ALL_CMAKE_EXTRA += -DFFI_STATIC_LIBRARIES=
+endif
 endif
 
 # macros for various compiler_rt/runtime library features
@@ -905,7 +918,7 @@ OCAML_ENABLE = no
 OCAML_ARCHS = amd64 arm64 ppc64el riscv64 s390x
 OCAML_RELEASES = stretch buster bullseye bookworm trixie forky \
 	precise trusty xenial bionic focal jammy noble plucky questing \
-	resolute stonking
+	resolute stonking crimson
 ifneq (,$(filter $(DISTRO), $(OCAML_RELEASES)))
   ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
   # Enable OCAML for this arch.
