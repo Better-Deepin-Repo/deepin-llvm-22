@@ -1,0 +1,4 @@
+llvm-@LLVM_VERSION@-doc: embedded-javascript-library please use sphinx [usr/share/doc/llvm-@LLVM_VERSION@-doc/html/_static/*.js]
+# upstream documentation, links to the community calendar and mathjax
+llvm-@LLVM_VERSION@-doc: privacy-breach-generic *calendar.google.com*
+llvm-@LLVM_VERSION@-doc: privacy-breach-generic *mathjax*

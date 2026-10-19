@@ -1,0 +1,54 @@
+From 6458195e49ecce07f10c185a82ed0a2bb6ca753b Mon Sep 17 00:00:00 2001
+From: Nikita Popov <npopov@redhat.com>
+Date: Fri, 10 Jul 2026 16:08:02 +0200
+Subject: [PATCH] [SDAG] Freeze condition in select of load fold (#208683)
+
+When converting `select cond, (load p1), (load p2)` to `load (select
+cond, p1, p2)`, if `cond` is poison, originally this would result in a
+`poison` result, while after the transform it would result in a load of
+poison, which is immediate UB. Fix this by freezing the condition.
+
+Fixes https://github.com/llvm/llvm-project/issues/208611.
+
+(cherry picked from commit f2dfbf06f7db1a3cace4beb9f65d5a7f6a8b6235 , without the test part)
+---
+ llvm/lib/CodeGen/SelectionDAG/DAGCombiner.cpp |  16 +-
+
+diff --git a/llvm/lib/CodeGen/SelectionDAG/DAGCombiner.cpp b/llvm/lib/CodeGen/SelectionDAG/DAGCombiner.cpp
+index ee9238753735..dec92eff5bc1 100644
+--- a/llvm/lib/CodeGen/SelectionDAG/DAGCombiner.cpp
++++ b/llvm/lib/CodeGen/SelectionDAG/DAGCombiner.cpp
+@@ -29318,10 +29318,12 @@ bool DAGCombiner::SimplifySelectOps(SDNode *TheSelect, SDValue LHS,
+            SDNode::hasPredecessorHelper(RLD, Visited, Worklist)))
+         return false;
+ 
+-      Addr = DAG.getSelect(SDLoc(TheSelect),
+-                           LLD->getBasePtr().getValueType(),
+-                           TheSelect->getOperand(0), LLD->getBasePtr(),
+-                           RLD->getBasePtr());
++      // If the condition is poison, originally this would result in a poison
++      // result. After the transform, this would result in a load of poison,
++      // which is UB. Freeze the condition to prevent this.
++      Addr = DAG.getSelect(SDLoc(TheSelect), LLD->getBasePtr().getValueType(),
++                           DAG.getFreeze(TheSelect->getOperand(0)),
++                           LLD->getBasePtr(), RLD->getBasePtr());
+     } else {  // Otherwise SELECT_CC
+       // We cannot do this optimization if any pair of {RLD, LLD} is a
+       // predecessor to {RLD, LLD, CondLHS, CondRHS}. As we've already compared
+@@ -29340,10 +29342,10 @@ bool DAGCombiner::SimplifySelectOps(SDNode *TheSelect, SDValue LHS,
+            SDNode::hasPredecessorHelper(RLD, Visited, Worklist)))
+         return false;
+ 
++      SDValue FrozenOp0 = DAG.getFreeze(TheSelect->getOperand(0));
++      SDValue FrozenOp1 = DAG.getFreeze(TheSelect->getOperand(1));
+       Addr = DAG.getNode(ISD::SELECT_CC, SDLoc(TheSelect),
+-                         LLD->getBasePtr().getValueType(),
+-                         TheSelect->getOperand(0),
+-                         TheSelect->getOperand(1),
++                         LLD->getBasePtr().getValueType(), FrozenOp0, FrozenOp1,
+                          LLD->getBasePtr(), RLD->getBasePtr(),
+                          TheSelect->getOperand(4));
+     }
+-- 
+2.47.3
+

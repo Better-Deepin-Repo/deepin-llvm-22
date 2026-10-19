@@ -1,3 +1,100 @@
+llvm-toolchain-22 (1:22.1.8-3) unstable; urgency=medium
+
+  * Enable the x86 load-combining miscompilation fix
+    (llvm/llvm-project#208611). The patch was added in July but never
+    listed in debian/patches/series.
+  * Remove unbreak-arhmf.patch, applied upstream.
+  * Fix libc++1 and libc++abi1 symbols files: the (subst)/{size_t}
+    entries are pkg-kde-tools syntax that plain dpkg-gensymbols never
+    expands, so they were dropped in March and the size_t-mangled
+    symbols appeared with the Debian revision. Expand them into
+    arch-bits/arch-tagged entries and add the OMP_6.0 versioned symbols
+    to libomp5.
+  * Generate the git-clang-format and run-clang-tidy manpages from the
+    source scripts, they were empty.
+  * d/NEWS: use a version that exists in the changelog.
+  * d/copyright: add the missing License field and the BSD-3-Clause
+    text.
+  * Drop the lldb postinst, which only called ldconfig.
+  * Use debhelper-compat instead of debian/compat.
+  * Refresh and extend the lintian overrides.
+  * Stop building libc++1, libc++abi1, libomp5 and llvm-libunwind1 on
+    forky, they are now built by LLVM 23. (Closes: #1149154)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 27 Sep 2026 08:43:47 +0200
+
+llvm-toolchain-22 (1:22.1.8-2) unstable; urgency=medium
+
+  [ Sylvestre Ledru ]
+  * d/rules: retry the documentation build serially when sphinx's parallel
+    workers die (bare "EOFError" from multiprocessing after a successful
+    compile, trixie amd64/arm64 2026-09-02/03)
+  * d/rules: set SCCACHE_IDLE_TIMEOUT=0 so the sccache server stays alive for
+    the whole build; otherwise it idles out (default 600s) during the quiet
+    final-link phase and the libfuzzer step auto-spawns a default-config server
+    writing to $HOME/.cache/sccache, which fails with HOME=/nonexistent
+  * d/rules: use the shared GCS sccache cache on arm64 too (add arm64 to the
+    GCP arch filter)
+  * d/rules: Disable sccache on the releases whose glibc is too old for the
+    binary the build host provides. /opt/sccache/sccache comes from
+    mozilla/sccache's latest release and, on s390x (the only arch without a
+    static musl build), needs glibc >= 2.34 since v0.17.0. On focal
+    (glibc 2.31) it cannot even start, and the build died at --start-server
+    with "version `GLIBC_2.34' not found" in stamps/configure.
+  * d/rules: Drop llvm-mt from the install list when it wasn't built.
+    Upstream only builds llvm-mt when it detects libxml2 at configure
+    time; on Ubuntu focal/arm64 the libxml2 symbol check fails and the
+    tool is silently skipped, which made dh_install --fail-missing abort
+    on usr/lib/llvm-22/bin/llvm-mt and usr/bin/llvm-mt-22.
+  * Add a test for the wasi path detection. Thanks Max Gilmour for the work
+    (Closes: #1138702)
+  * d/control.in: libfuzzer-X.Y-dev now depends on libclang-rt-X.Y-dev.
+    -fsanitize=fuzzer links libclang_rt.fuzzer*.a (and
+    libclang_rt.ubsan_standalone.a) from the compiler-rt resource
+    directory, which lives in libclang-rt-X.Y-dev. As it was only a
+    Recommends of libclang-common-X.Y-dev, it was not pulled into build
+    chroots and the link failed. Closes: #1147573.
+  * d/debian-llvm-testsuite.bats: don't skip the libFuzzer compilation test
+    when the compiler-rt libraries are missing, fail instead.
+  * d/libmlir-X.Y.links.in: new, keep a /usr/lib/llvm-X.Y/lib symlink to the
+    libMLIR SONAME now installed in /usr/lib/<triplet>. libmlir-X.Y-dev
+    ships /usr/lib/llvm-X.Y/lib/libMLIR.so as a relative symlink to it and
+    the mlir tools have that directory in their RUNPATH, so both were left
+    dangling.
+  * d/debian-llvm-testsuite.bats: link the fuzzer runtime from the
+    compiler-rt resource directory instead of the removed
+    /usr/lib/llvm-X.Y/lib/libFuzzer.a, and check that it is present.
+  * d/control.in: document that libfuzzer-X.Y-dev is now a dependency
+    package: the fuzzer runtime (libclang_rt.fuzzer*.a) and
+    FuzzedDataProvider.h come from the compiler-rt resource directory in
+    libclang-rt-X.Y-dev, which is what clang links for -fsanitize=fuzzer.
+    This also avoids the empty-binary-package lintian warning.
+
+  [ Talha Can Havadar ]
+  * d/p/amdgpu-fix-simulated-trap-continuation-block.diff: cherry-pick
+    llvm/llvm-project@9429a1e809fd (PR #174774,
+    "[AMDGPU] Fix insertSimulatedTrap to return correct continuation block")
+    Fixes a codegen crash on gfx1100/gfx1101/gfx1102 (RDNA3 desktop:
+    RX 7900/7800/7700/7600) where clang aborts with
+    "fatal error: error in backend: Unsupported instruction : <MCInst NNNN ...>"
+    from the AMDGPU AsmPrinter whenever a kernel contains a block that ends in
+    llvm.trap() with no successors — an unlowered pseudo reaches the MC layer.
+    Notably affects pytorch-rocm 2.12's Loss.hip (FTBFS). Reported upstream as
+    llvm/llvm-project#208912. Fix landed on main branch on 2026-01-21 (LLVM 23);
+    release/22.x was cut 8 days before and never received it. This cherry-pick
+    lets 22.1.x carry the fix without waiting for a 22.1.9 or 22.2.0 point
+    release upstream. (Closes: #1141868)
+
+  [ Matthias Klose ]
+  * Fix removing RUNPATH, broken in Nov. 2025. Closes: #1142548.
+  * Stop building, shipping and testing the obsolete libFuzzer.a.
+    Closes: #1147573.
+  * Install libmlir shared library in /usr/lib. Closes: #1142778.
+  * libmlir: Remove provides, conflicts and replaces. Not needed.
+    Closes: #1137244.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 25 Jul 2026 18:43:43 +0200
+
 llvm-toolchain-22 (1:22.1.8-1) unstable; urgency=medium
 
   * New upstream release

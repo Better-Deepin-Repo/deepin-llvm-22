@@ -811,7 +811,9 @@ libomp.so.5 #PACKAGE# #MINVER#
  omp_get_device_and_host_allocator_@VERSION 1:21.1
  omp_get_device_and_host_memspace@VERSION 1:21.1
  omp_get_device_and_host_memspace_@VERSION 1:21.1
+ omp_get_device_from_uid@OMP_6.0 1:22.1
  omp_get_device_from_uid@VERSION 1:22.1
+ omp_get_device_from_uid_@OMP_6.0 1:22.1
  omp_get_device_from_uid_@VERSION 1:22.1
  omp_get_device_memspace@VERSION 1:21.1
  omp_get_device_memspace_@VERSION 1:21.1
@@ -945,7 +947,9 @@ libomp.so.5 #PACKAGE# #MINVER#
  omp_get_thread_num@VERSION 1:21.1
  omp_get_thread_num_@OMP_1.0 1:21.1
  omp_get_thread_num_@VERSION 1:21.1
+ omp_get_uid_from_device@OMP_6.0 1:22.1
  omp_get_uid_from_device@VERSION 1:22.1
+ omp_get_uid_from_device_@OMP_6.0 1:22.1
  omp_get_uid_from_device_@VERSION 1:22.1
  omp_get_wtick@OMP_2.0 1:21.1
  omp_get_wtick@VERSION 1:21.1

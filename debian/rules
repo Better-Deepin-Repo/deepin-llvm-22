@@ -123,11 +123,12 @@ endef
 # Example: $(call remove_rpath,$(DEB_INST)/$(LLVM_DIR)/bin/*)
 define remove_rpath
 	for i in \
-	  `chrpath -k $(1) 2>/dev/null | awk -F: '/R(UN)?PATH=/ {print $$$$1}'`; \
+	  `chrpath -k $(1) 2>/dev/null | awk -F: '/R(UN)?PATH=/ {print $$1}'`; \
 	do \
-	  [ -h $$$$i ] && continue; \
-	  chrpath -d $$$$i; \
-	  echo "removed RPATH/RUNPATH: $$$$i"; \
+	  [ -h $$i ] && continue; \
+	  echo "checking $$i ..."; \
+	  chrpath -d $$i; \
+	  echo "removed RPATH/RUNPATH: $$i"; \
 	done
 endef
 
@@ -179,10 +180,12 @@ ifeq ($(DERIVATIVE),Ubuntu)
   # list series which should not have the common packages
   ifneq (,$(filter $(DISTRO), series1 series2))
     SKIP_COMMON_PACKAGES = yes
+    NEW_LLVM_VERSION = 23
   endif
 else ifeq ($(DERIVATIVE),Debian)
-  ifneq (,$(filter $(DISTRO), series1 series2))
+  ifneq (,$(filter $(DISTRO), forky))
     SKIP_COMMON_PACKAGES = yes
+    NEW_LLVM_VERSION = 23
   endif
 endif
 # set these two when building without the common packages
@@ -902,7 +905,7 @@ OCAML_ENABLE = no
 OCAML_ARCHS = amd64 arm64 ppc64el riscv64 s390x
 OCAML_RELEASES = stretch buster bullseye bookworm trixie forky \
 	precise trusty xenial bionic focal jammy noble plucky questing \
-	resolute stonking crimson
+	resolute stonking
 ifneq (,$(filter $(DISTRO), $(OCAML_RELEASES)))
   ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
   # Enable OCAML for this arch.
@@ -942,9 +945,15 @@ endif
 
 SCCACHE_ENABLE=no
 SCCACHE_CMAKE =
-# if sccache is installed in the chroot, use it
-ifeq ($(shell test -e /opt/sccache/sccache && echo -n yes),yes)
-  ifneq (,$(filter $(DEB_HOST_ARCH),i386 amd64 s390x arm64))
+# the host sccache binary is not static on s390x and needs glibc >= 2.34
+SCCACHE_DISABLE_DISTRO := stretch buster bullseye xenial bionic focal
+SCCACHE_ARCHS := i386 amd64 s390x arm64
+ifneq (,$(filter $(DISTRO), $(SCCACHE_DISABLE_DISTRO)))
+  SCCACHE_ARCHS :=
+  $(info sccache disabled for $(DISTRO) (host binary needs glibc >= 2.34))
+endif
+ifeq ($(shell LD_LIBRARY_PATH=/opt/sccache timeout 30 /opt/sccache/sccache --version >/dev/null 2>&1 && echo -n yes),yes)
+  ifneq (,$(filter $(DEB_HOST_ARCH), $(SCCACHE_ARCHS)))
     STAGE_1_CMAKE_EXTRA += $(SCCACHE_CMAKE)
     SCCACHE_ENABLE=yes
     SCCACHE_PATH=/opt/sccache/
@@ -1205,12 +1214,16 @@ endif
 ifeq (${SCCACHE_ENABLE},yes)
 # Just in case...
 	$(SCCACHE_CMD) --stop-server||true
-ifneq (,$(filter $(DEB_HOST_ARCH),i386 amd64))
-# Start the sccache server with the right set of options to use GCP
-	SCCACHE_LOG=sccache=debug SCCACHE_ERROR_LOG=$(SCCACHE_PATH)/sccache.log SCCACHE_GCS_KEY_PATH=$(SCCACHE_PATH)/secret-gcp-storage.json SCCACHE_GCS_BUCKET=apt-llvm-org-sccache SCCACHE_GCS_RW_MODE=READ_WRITE $(SCCACHE_CMD) --start-server
+ifneq (,$(filter $(DEB_HOST_ARCH),i386 amd64 arm64))
+# Start the sccache server with the right set of options to use GCP.
+# SCCACHE_IDLE_TIMEOUT=0 keeps the server alive for the whole build: later
+# direct-call steps (e.g. libfuzzer) have no sccache env, so if the server had
+# idled out (default 600s) they would auto-spawn a default-config server writing
+# to $HOME/.cache/sccache -- which fails with HOME=/nonexistent.
+	SCCACHE_IDLE_TIMEOUT=0 SCCACHE_LOG=sccache=debug SCCACHE_ERROR_LOG=$(SCCACHE_PATH)/sccache.log SCCACHE_GCS_KEY_PATH=$(SCCACHE_PATH)/secret-gcp-storage.json SCCACHE_GCS_BUCKET=apt-llvm-org-sccache SCCACHE_GCS_RW_MODE=READ_WRITE $(SCCACHE_CMD) --start-server
 else
 # on s390x machine, use a local cache
-	SCCACHE_CACHE_SIZE=20G SCCACHE_LOG=sccache=debug SCCACHE_ERROR_LOG=$(SCCACHE_PATH)/sccache.log SCCACHE_DIR=/opt/sccache/cache/ SCCACHE_DIRECT=true $(SCCACHE_CMD) --start-server
+	SCCACHE_IDLE_TIMEOUT=0 SCCACHE_CACHE_SIZE=20G SCCACHE_LOG=sccache=debug SCCACHE_ERROR_LOG=$(SCCACHE_PATH)/sccache.log SCCACHE_DIR=/opt/sccache/cache/ SCCACHE_DIRECT=true $(SCCACHE_CMD) --start-server
 endif
 endif
 	echo "Running tests: $(RUN_TEST)"
@@ -1267,7 +1280,7 @@ endif
 	-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=OFF \
 	$(CMAKE_EXTRA) \
 	-DBUILTINS_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS))" \
-	-DRUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS),Release,-DCMAKE_Fortran_FLAGS=$(RUNTIMES_FORTRAN_FLAGS);-DFFI_STATIC_LIBRARIES=/usr/lib/$(DEB_HOST_MULTIARCH)/libffi.so)" \
+	-DRUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_1_CFLAGS),$(STAGE_1_CXXFLAGS),$(STAGE_1_LDFLAGS),Release,-DCMAKE_Fortran_FLAGS=$(RUNTIMES_FORTRAN_FLAGS))" \
 	-DCLANG_ENABLE_BOOTSTRAP=ON \
 	-DCLANG_BOOTSTRAP_TARGETS="$(ENABLED_STAGE2_CMAKE_BUILD_TARGETS)" \
 	-DCLANG_BOOTSTRAP_PASSTHROUGH="CMAKE_INSTALL_PREFIX;CMAKE_SUPPRESS_REGENERATION;ENABLE_LINKER_BUILD_ID;LLVM_ENABLE_PIC;LLVM_ENABLE_RTTI;LLVM_INCLUDE_GO_TESTS;LLVM_USE_RELATIVE_PATHS_IN_FILES;CLANG_DEFAULT_LINKER;CLANG_DEFAULT_CXX_STDLIB;CLANG_DEFAULT_RTLIB;COMPILER_RT_USE_LIBCXX;COMPILER_RT_USE_BUILTINS_LIBRARY;COMPILER_RT_DEFAULT_TARGET_ONLY;COMPILER_RT_INCLUDE_TESTS;LIBUNWIND_USE_COMPILER_RT;LIBCXXABI_ENABLE_EXCEPTIONS;LIBCXXABI_USE_COMPILER_RT;LIBCXXABI_USE_LLVM_UNWINDER;LIBCXX_USE_COMPILER_RT;LIBCXX_ENABLE_EXCEPTIONS;LIBCXX_ENABLE_STATIC_ABI_LIBRARY;LIBCXX_STATICALLY_LINK_ABI_IN_STATIC_LIBRARY;LIBCXX_STATICALLY_LINK_ABI_IN_SHARED_LIBRARY;LIBOMP_ENABLE_RTTI;LLVM_TEMPORARILY_ALLOW_OLD_TOOLCHAIN;CLANG_FORCE_MATCHING_LIBCLANG_SOVERSION;CMAKE_C_COMPILER_LAUNCHER;CMAKE_CXX_COMPILER_LAUNCHER;LLVM_LIBC_GPU_BUILD;LLDB_GLOBAL_INIT_DIRECTORY" \
@@ -1275,7 +1288,6 @@ endif
 	-DBOOTSTRAP_CMAKE_C_FLAGS_RELWITHDEBINFO="$(opt_flags)" \
 	-DBOOTSTRAP_CMAKE_CXX_FLAGS_RELWITHDEBINFO="$(opt_flags)" \
 	$(call BOOTSTRAP_CMAKE_FLAGS,$(STAGE_2_CFLAGS),$(STAGE_2_CXXFLAGS),$(STAGE_2_LDFLAGS)) \
-	-DBOOTSTRAP_FFI_STATIC_LIBRARIES=/usr/lib/$(DEB_HOST_MULTIARCH)/libffi.so \
 	-DBOOTSTRAP_LLVM_ENABLE_FFI=ON \
 	-DBOOTSTRAP_LLVM_ENABLE_DUMP=ON \
 	-DBOOTSTRAP_LLVM_ENABLE_LIBPFM=ON \
@@ -1296,7 +1308,7 @@ endif
 	-DBOOTSTRAP_PYTHON_EXECUTABLE=/usr/bin/python3 \
 	$(BOOTSTRAP_CMAKE_EXTRA) \
 	-DBOOTSTRAP_BUILTINS_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_2_CFLAGS),$(STAGE_2_CXXFLAGS),$(STAGE_2_LDFLAGS),RelWithDebInfo,-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags))" \
-	-DBOOTSTRAP_RUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_2_CFLAGS),$(RUNTIMES_CXXFLAGS),$(STAGE_2_LDFLAGS) -L$(STAGE_1_LIB_DIR),RelWithDebInfo,-DCMAKE_Fortran_FLAGS=$(STAGE_2_FORTRAN_FLAGS);-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_Fortran_FLAGS_RELWITHDEBINFO=$(STAGE_2_FORTRAN_OPT_FLAGS);-DFFI_STATIC_LIBRARIES=/usr/lib/$(DEB_HOST_MULTIARCH)/libffi.so)"  || tail -100 build-llvm/CMakeFiles/CMakeConfigureLog.yaml
+	-DBOOTSTRAP_RUNTIMES_CMAKE_ARGS="$(call CMAKE_NESTED_FLAGS,$(STAGE_2_CFLAGS),$(RUNTIMES_CXXFLAGS),$(STAGE_2_LDFLAGS) -L$(STAGE_1_LIB_DIR),RelWithDebInfo,-DCMAKE_Fortran_FLAGS=$(STAGE_2_FORTRAN_FLAGS);-DCMAKE_C_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=$(opt_flags);-DCMAKE_Fortran_FLAGS_RELWITHDEBINFO=$(STAGE_2_FORTRAN_OPT_FLAGS))"  || tail -100 build-llvm/CMakeFiles/CMakeConfigureLog.yaml
 
 	FOUND_VERSION=`grep LLVM_VERSION_STRING build-llvm/include/llvm/Config/llvm-config.h|cut -d\" -f2`; \
 	if ! echo "$(LLVM_VERSION_FULL)"|grep -q "$$FOUND_VERSION"; then \
@@ -1334,18 +1346,6 @@ stamps/debian-full-build: stamps/configure
 		echo "libclang-$(LLVM_VERSION).so.1 link is broken"; \
 		exit 2; \
 	fi
-	touch $@
-
-stamps/debian-libfuzzer-build: stamps/debian-full-build
-ifeq (${LIBFUZZER_ENABLE},yes)
-	cd $(TARGET_BUILD); \
-	CFLAGS="$(opt_flags) $(STAGE_2_CFLAGS)"; \
-	echo $$CFLAGS; \
-	for sourcefile in $(BASE_PATH)/compiler-rt/lib/fuzzer/*.cpp; do \
-		$(SCCACHE_CMD) $(STAGE_2_BIN_DIR)/clang++ -c $$CFLAGS -std=c++17 $$sourcefile -IFuzzer || exit 1; \
-	done; \
-	ar ruv libFuzzer.a Fuzzer*.o
-endif
 	touch $@
 
 stamps/debian-libclc-build: stamps/debian-full-build
@@ -1396,7 +1396,6 @@ stamps/sccache-stats:
 
 override_dh_auto_build: \
   stamps/debian-full-build \
-  $(if $(filter libfuzzer-%, $(packages)),stamps/debian-libfuzzer-build) \
   $(if $(filter libclc-%, $(packages)),stamps/debian-libclc-build) \
   $(if $(filter %-wasm32 %-wasm64, $(packages)),stamps/debian-wasm-build) \
   $(if $(filter %-dev-win, $(packages)),stamps/debian-mingw-build) \
@@ -1425,11 +1424,22 @@ stamps/build_doc: stamps/debian-full-build
 	ninja -C "$(TARGET_BUILD_STAGE2)" $(VERBOSE) ocaml_doc; \
 	fi)
 
-	ninja -C $(TARGET_BUILD_STAGE2) $(VERBOSE) docs-llvm-html docs-clang-html docs-clang-tools-html docs-clang-tools-man docs-clang-man docs-llvm-man
-
-ifeq (${POLLY_ENABLE},yes)
-	ninja -C $(TARGET_BUILD_STAGE2) $(VERBOSE) docs-polly-html docs-polly-man
-endif
+# Every docs-* target is one sphinx-build -j N (LLVM_SPHINX_THREADS, half the
+# cores by default: 16 on the 32-core cloud agents) and ninja starts them all
+# at once. When one of the forked sphinx workers dies, the parent reports only
+# a bare "EOFError" from multiprocessing/connection.py -- seen on the trixie
+# snapshot builds of 2026-09-02/03 on amd64 and arm64 (always a *-man target),
+# after the multi-hour compile had succeeded. Retry serially before giving up:
+# fresh doctrees, no worker processes, one target at a time. A deterministic
+# docs error then fails again, with its real traceback this time.
+	docs="docs-llvm-html docs-clang-html docs-clang-tools-html docs-clang-tools-man docs-clang-man docs-llvm-man"; \
+	if test "$(POLLY_ENABLE)" = yes; then docs="$$docs docs-polly-html docs-polly-man"; fi; \
+	ninja -C $(TARGET_BUILD_STAGE2) $(VERBOSE) $$docs || { \
+		echo "sphinx-build failed; retrying the documentation build serially"; \
+		find $(TARGET_BUILD_STAGE2) -maxdepth 6 -type d -name '_doctrees-*' -prune -exec rm -rf {} +; \
+		cmake -DLLVM_SPHINX_THREADS=1 $(TARGET_BUILD_STAGE2) >/dev/null && \
+		ninja -C $(TARGET_BUILD_STAGE2) -j1 $(VERBOSE) $$docs; \
+	}
 
 # Rename manpages
 	d=$(CURDIR)/llvm/docs/_build/man/; \
@@ -1457,8 +1467,11 @@ endif
 	clang/tools/scan-view/bin/scan-view --help || true
 	help2man --no-info --version-string=$(LLVM_VERSION) clang/tools/scan-view/bin/scan-view > debian/man/scan-view-$(LLVM_VERSION).1 || true
 	help2man --no-info --version-string=$(LLVM_VERSION) clang/tools/clang-format/clang-format-diff.py > debian/man/clang-format-diff-$(LLVM_VERSION).1 || true
+	# Python scripts: run them from the source tree, the build tree does not have them in bin/
+	help2man --no-info --version-string=$(LLVM_VERSION) --name="run clang-format on the lines changed in a git commit" clang/tools/clang-format/git-clang-format > debian/man/git-clang-format-$(LLVM_VERSION).1 || true
+	help2man --no-info --version-string=$(LLVM_VERSION) --name="run clang-tidy in parallel over a compilation database" clang-tools-extra/clang-tidy/tool/run-clang-tidy.py > debian/man/run-clang-tidy-$(LLVM_VERSION).1 || true
 
-	CMDS="llvm-dwarfdump llvm-mc llvm-objdump llvm-rtdyld llvm-size llvm-ranlib lldb clang-format clang clang++ clang-tblgen clang-check clang-cpp clang-tidy clang-apply-replacements clang-query pp-trace sancov lli modularize clang-include-fixer find-all-symbols clang-reorder-fields ld.lld llvm-tblgen clang-change-namespace clang-offload-bundler clangd clang-repl git-clang-format run-clang-tidy"; \
+	CMDS="llvm-dwarfdump llvm-mc llvm-objdump llvm-rtdyld llvm-size llvm-ranlib lldb clang-format clang clang++ clang-tblgen clang-check clang-cpp clang-tidy clang-apply-replacements clang-query pp-trace sancov lli modularize clang-include-fixer find-all-symbols clang-reorder-fields ld.lld llvm-tblgen clang-change-namespace clang-offload-bundler clangd clang-repl"; \
 	for f in $$CMDS; do \
 		echo "Generating manpage of $$f"; \
 		LD_LIBRARY_PATH=$(DEB_INST)/$(LLVM_DIR)/lib/:/usr/lib/*/libfakeroot help2man --no-info --version-string=$(LLVM_VERSION) $(TARGET_BUILD_STAGE2)/bin/$$f > debian/man/$$f-$(LLVM_VERSION).1 || true; \
@@ -1538,13 +1551,6 @@ ifneq (,$(filter clang-tools-$(LLVM_VERSION), $(packages)))
 		debian/clang-tools-$(LLVM_VERSION)/$(LLVM_DIR)/bin/asan_symbolize
 	dh_link -p clang-tools-$(LLVM_VERSION) \
 		/$(LLVM_DIR)/bin/asan_symbolize /usr/bin/asan_symbolize-$(LLVM_VERSION)
-endif
-
-ifneq (,$(filter libfuzzer-$(LLVM_VERSION)-dev, $(packages)))
-ifeq (${LIBFUZZER_ENABLE},yes)
-	mkdir -p debian/libfuzzer-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/
-	cp -v $(TARGET_BUILD)/libFuzzer.a debian/libfuzzer-$(LLVM_VERSION)-dev/$(LLVM_DIR)/lib/
-endif
 endif
 
 # Create this fake directory to make the install libclang-common-dev happy
@@ -1932,6 +1938,12 @@ ifneq ($(LLDB_DEBUGINFOD),)
 	: # uncomment the debuginfod server and patch the URL
 	sed 's,^[# ]*\(settings set plugin.symbol-locator.debuginfod.server-urls\).*,\1 $(LLDB_DEBUGINFOD),' -i debian/lldbinit
 endif
+
+	: # upstream only builds llvm-mt when it detects libxml2 (fails on arm64 focal)
+	if [ ! -e debian/tmp/$(LLVM_DIR)/bin/llvm-mt ]; then \
+		echo "WARNING: llvm-mt was not built (libxml2 not detected?), removing it from debian/llvm-$(LLVM_VERSION).install"; \
+		sed -i -e '/llvm-mt/d' debian/llvm-$(LLVM_VERSION).install; \
+	fi
 
 ifneq ($(SLOPPY_BUILD),yes)
 	dh_install --fail-missing ${skip_packages}

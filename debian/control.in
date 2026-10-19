@@ -4,7 +4,7 @@ Priority: optional
 Rules-Requires-Root: no
 Maintainer: LLVM Packaging Team <pkg-llvm-team@lists.alioth.debian.org>
 Uploaders: Sylvestre Ledru <sylvestre@debian.org>, Gianfranco Costamagna <locutusofborg@debian.org>
-Build-Depends: debhelper (>= 11.0), cmake, ninja-build,
+Build-Depends: debhelper-compat (= 11), cmake, ninja-build,
     chrpath, texinfo, sharutils,
     libelf-dev,
     libffi-dev,
@@ -310,7 +310,8 @@ Package: libfuzzer-@LLVM_VERSION@-dev
 Build-Profiles: <!pkg.llvm.noclang>
 Architecture: @LIBFUZZER_ARCHS@
 Section: libdevel
-Depends: ${shlibs:Depends}, ${misc:Depends}, clang-@LLVM_VERSION@ (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, clang-@LLVM_VERSION@ (= ${binary:Version}),
+ libclang-rt-@LLVM_VERSION@-dev (= ${binary:Version})
 Description: Library for coverage-guided fuzz testing
  LibFuzzer is a library for in-process, coverage-guided, evolutionary fuzzing
  of other libraries.
@@ -326,6 +327,13 @@ Description: Library for coverage-guided fuzz testing
  on the corpus of input data in order to maximize the code coverage. The code
  coverage information for libFuzzer is provided by LLVM's SanitizerCoverage
  instrumentation.
+ .
+ This is a dependency package: it does not ship a libFuzzer.a of its own
+ anymore. The fuzzer runtime built by upstream (libclang_rt.fuzzer*.a) and
+ the FuzzedDataProvider.h header are part of the compiler-rt resource
+ directory, shipped by libclang-rt-@LLVM_VERSION@-dev, and clang links them itself when
+ -fsanitize=fuzzer is used. Installing this package pulls in everything
+ needed for that.
 
 
 Package: python3-clang-@LLVM_VERSION@
@@ -957,9 +965,6 @@ Section: libs
 Architecture: @ANY_ARCHS@
 Depends: ${shlibs:Depends},
  ${misc:Depends}
-Provides: libmlir-x.y
-Conflicts: libmlir-x.y
-Replaces: libmlir-x.y
 Description: Multi-Level Intermediate Representation library
  Novel approach to building reusable and extensible compiler infrastructure.
  MLIR aims to address software fragmentation, improve compilation for

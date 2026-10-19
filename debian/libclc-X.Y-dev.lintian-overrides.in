@@ -1,0 +1,2 @@
+# only describes the location of the target-independent bitcode files
+libclc-@LLVM_VERSION@-dev: pkg-config-unavailable-for-cross-compilation [usr/lib/pkgconfig/libclc.pc]

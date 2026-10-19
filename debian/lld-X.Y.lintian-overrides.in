@@ -1,2 +1,4 @@
 # known ...
 lld-@LLVM_VERSION@: no-manual-page
+# upstream mdoc manpage
+lld-@LLVM_VERSION@: groff-message *warning: empty input line* [usr/share/man/man1/ld.lld-@LLVM_VERSION@.1.gz:*]

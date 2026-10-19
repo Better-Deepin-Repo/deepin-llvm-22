@@ -88,3 +88,5 @@ lower-flang-py-dep.diff
 revert-issue-139220.diff
 disable-omptest.diff
 ubuntu-stonking.diff
+amdgpu-fix-simulated-trap-continuation-block.diff
+x86-fix-incorrect-load-combining-causing-oob-reads.patch

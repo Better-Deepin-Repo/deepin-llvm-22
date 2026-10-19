@@ -1,0 +1,4 @@
+# compatibility links for tools expecting a build tree
+llvm-@LLVM_VERSION@-dev: symlink-is-self-recursive .. [usr/lib/llvm-@LLVM_VERSION@/build/*]
+# plugins in the private llvm directory
+llvm-@LLVM_VERSION@-dev: package-has-unnecessary-activation-of-ldconfig-trigger

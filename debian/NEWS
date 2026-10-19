@@ -1,4 +1,4 @@
-llvm-toolchain-21 (1:21.1.4-4) unstable; urgency=medium
+llvm-toolchain-snapshot (1:22~++20251023025710+3f47a7be1ae6-1~exp2) unstable; urgency=medium
 
   In order to allow for smoother upgrades for packages whose programs
   dynamically link against them, we have renamed the libc++1-22,

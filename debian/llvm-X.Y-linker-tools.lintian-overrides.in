@@ -1,0 +1,2 @@
+# LLVMgold.so and friends are plugins in the private llvm directory
+llvm-@LLVM_VERSION@-linker-tools: package-has-unnecessary-activation-of-ldconfig-trigger

@@ -4,11 +4,11 @@ Priority: optional
 Rules-Requires-Root: no
 Maintainer: LLVM Packaging Team <pkg-llvm-team@lists.alioth.debian.org>
 Uploaders: Sylvestre Ledru <sylvestre@debian.org>, Gianfranco Costamagna <locutusofborg@debian.org>
-Build-Depends: debhelper (>= 11.0), cmake, ninja-build,
+Build-Depends: debhelper-compat (= 11), cmake, ninja-build,
     chrpath, texinfo, sharutils,
     libelf-dev,
     libffi-dev,
-    lsb-release, patchutils, diffstat, xz-utils, python3-dev,
+    lsb-release, patchutils, diffstat, xz-utils, python3-dev, libc++1, libc++abi1, libomp5 [amd64 arm64 armhf i386 loong64 mips64el ppc64 ppc64el riscv64 hurd-amd64], llvm-libunwind1 [amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64 s390x], libllvm23,
     libedit-dev, libncurses-dev, swig, python3-sphinx (>= 1.3.6),
     binutils-dev, lld [amd64 arm64 armel armhf i386 loong64 ppc64el riscv64 s390x] | hello [amd64 arm64 armel armhf i386 loong64 ppc64el riscv64 s390x],
     libxml2-dev,
@@ -310,7 +310,8 @@ Package: libfuzzer-22-dev
 Build-Profiles: <!pkg.llvm.noclang>
 Architecture: amd64 arm64 armel armhf i386 loong64 m68k mips64el mipsel powerpc ppc64 ppc64el riscv64 s390x sparc sparc64 x32
 Section: libdevel
-Depends: ${shlibs:Depends}, ${misc:Depends}, clang-22 (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, clang-22 (= ${binary:Version}),
+ libclang-rt-22-dev (= ${binary:Version})
 Description: Library for coverage-guided fuzz testing
  LibFuzzer is a library for in-process, coverage-guided, evolutionary fuzzing
  of other libraries.
@@ -326,6 +327,13 @@ Description: Library for coverage-guided fuzz testing
  on the corpus of input data in order to maximize the code coverage. The code
  coverage information for libFuzzer is provided by LLVM's SanitizerCoverage
  instrumentation.
+ .
+ This is a dependency package: it does not ship a libFuzzer.a of its own
+ anymore. The fuzzer runtime built by upstream (libclang_rt.fuzzer*.a) and
+ the FuzzedDataProvider.h header are part of the compiler-rt resource
+ directory, shipped by libclang-rt-22-dev, and clang links them itself when
+ -fsanitize=fuzzer is used. Installing this package pulls in everything
+ needed for that.
 
 
 Package: python3-clang-22
@@ -661,20 +669,6 @@ Description: LLVM OpenMP runtime - dev package
  linked against, and that manages the multiple threads in an OpenMP program
  while it is executing.
 
-Package: libomp5
-Build-Profiles: <!pkg.llvm.noclang>
-Architecture: amd64 arm64 armhf i386 loong64 mips64el ppc64 ppc64el riscv64 hurd-amd64
-Multi-Arch: same
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Provides: libomp-x.y
-Conflicts: libomp-x.y
-Breaks: libomp5-22
-Replaces: libomp5-22, libomp-x.y
-Description: LLVM OpenMP runtime
- The runtime is the part of the OpenMP implementation that your code is
- linked against, and that manages the multiple threads in an OpenMP program
- while it is executing.
-
 Package: libomp-22-doc
 Build-Profiles: <!pkg.llvm.noclang>
 Section: doc
@@ -724,31 +718,6 @@ Description: Offload Library
 
 # ------------- libcxx -------------
 
-Package: libc++1
-Build-Profiles: <!pkg.llvm.noclang>
-Section: libs
-Architecture: amd64 arm64 armel armhf hurd-amd64 hurd-i386 i386 loong64 m68k mips64el mipsel powerpc ppc64 ppc64el riscv64 s390x sparc sparc64 x32
-Multi-Arch: same
-Pre-Depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: clang
-Provides: libc++-x.y
-Conflicts: libc++-x.y
-Replaces: libc++1-21, libc++-x.y
-Breaks: libc++1-21, libc++1-19, libc++abi1-19, libc++1-14, libc++abi1-14
-Description: LLVM C++ Standard library
- libc++ is another implementation of the C++ standard library.
- .
- Features and Goals
- .
-   * Correctness as defined by the C++ standards.
-   * Fast execution.
-   * Minimal memory use.
-   * Fast compile times.
-   * ABI compatibility with gcc's libstdc++ for some low-level features such
-     as exception objects, rtti and memory allocation.
-   * Extensive unit tests.
-
 Package: libc++-22-dev
 Build-Profiles: <!pkg.llvm.noclang>
 Section: libdevel
@@ -797,26 +766,6 @@ Description: LLVM C++ Standard library (WASI)
  This package provides a version for the 32-bit WebAssembly System Interface.
 
 # ------------- libcxxabi -------------
-
-Package: libc++abi1
-Build-Profiles: <!pkg.llvm.noclang>
-Section: libs
-Architecture: amd64 arm64 armel armhf hurd-amd64 hurd-i386 i386 loong64 m68k mips64el mipsel powerpc ppc64 ppc64el riscv64 s390x sparc sparc64 x32
-Multi-Arch: same
-Pre-Depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Provides: libc++abi-x.y
-Conflicts: libc++abi-x.y
-Replaces: libc++abi1-21, libc++abi-x.y
-Breaks: libc++abi1-21, libc++abi1-19, libc++abi1-14
-Description: LLVM low level support for a standard C++ library
- libc++abi is another implementation of low level support for a standard C++
- library.
- .
- Features and Goals
- .
-   * Correctness as defined by the C++ standards.
-   * Provide a portable sublayer to ease the porting of libc++
 
 Package: libc++abi-22-dev
 Build-Profiles: <!pkg.llvm.noclang>
@@ -897,26 +846,6 @@ Description: OpenCL C language implementation - development files
 
 # ------------- libunwind -------------
 
-Package: llvm-libunwind1
-Build-Profiles: <!pkg.llvm.noclang>
-Section: libs
-Architecture: amd64 arm64 armhf i386 loong64 ppc64 ppc64el riscv64 s390x
-Multi-Arch: same
-Depends: ${shlibs:Depends},
- ${misc:Depends}
-Provides: libunwind-x.y
-Breaks: libunwind-21
-Conflicts: libunwind-x.y
-Replaces: libunwind-x.y, libunwind-21
-Description: LLVM unwinder, not compatible with glibc
- llvm-libunwind is the LLVM unwinder, with platform support for DWARF
- unwind info, SjLj, and ARM EHABI. Using it for packaging work inside
- Debian is not recommended, incompatible with glibc.
- .
- The low level libunwind API was designed to work either in-process (aka local)
- or to operate on another process (aka remote), but only the local path has
- been implemented. Remote unwinding remains as future work.
-
 Package: libunwind-22-dev
 Build-Profiles: <!pkg.llvm.noclang>
 Section: libdevel
@@ -957,9 +886,6 @@ Section: libs
 Architecture: amd64 arm64 armel armhf hurd-amd64 hurd-i386 i386 loong64 m68k mips64el mipsel powerpc ppc64 ppc64el riscv64 s390x sparc sparc64 x32
 Depends: ${shlibs:Depends},
  ${misc:Depends}
-Provides: libmlir-x.y
-Conflicts: libmlir-x.y
-Replaces: libmlir-x.y
 Description: Multi-Level Intermediate Representation library
  Novel approach to building reusable and extensible compiler infrastructure.
  MLIR aims to address software fragmentation, improve compilation for

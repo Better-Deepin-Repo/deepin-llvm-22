@@ -1,2 +1,4 @@
 # That is normal. Upstream does not match the debian convention
 libllvm@LLVM_VERSION@: package-name-doesnt-match-sonames
+# the development link is in llvm-X.Y-dev
+libllvm@LLVM_VERSION@: lacks-unversioned-link-to-shared-library example: usr/lib/*/libLLVM.so [usr/lib/*/libLLVM.so.*]

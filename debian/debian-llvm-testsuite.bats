@@ -966,12 +966,31 @@ skip_if_arch() {
     run file "${BATS_TMPDIR}/wasm_cout"
     assert_output -p "WebAssembly"
 
-    # bug 1138702
-    touch test.c
-    clang-$VERSION --target=wasm32-wasip1 test.c
+    # Clean up
+    rm -f "${BATS_TMPDIR}/wasm_cout_test.cpp" "${BATS_TMPDIR}/wasm_cout"
+}
+
+@test "Test WASM link with compiler-rt builtins (bug 1138702)" {
+    if ! dpkg -l | grep -q "libclang-rt-$VERSION-dev-wasm32"; then
+        skip "libclang-rt-$VERSION-dev-wasm32 not installed"
+    fi
+
+    if ! which wasm-ld-$VERSION > /dev/null; then
+        skip "wasm-ld-$VERSION not installed (lld-$VERSION)"
+    fi
+
+    # wasm-ld must find libclang_rt.builtins.a in the clang resource dir
+    : > "${BATS_TMPDIR}/wasm_builtins_test.c"
+
+    run clang-$VERSION --target=wasm32-wasip1 -o "${BATS_TMPDIR}/wasm_builtins_test" "${BATS_TMPDIR}/wasm_builtins_test.c"
+    refute_output -p "libclang_rt.builtins"
+    assert_success "Failed to link for wasm32-wasip1"
+
+    run file "${BATS_TMPDIR}/wasm_builtins_test"
+    assert_output -p "WebAssembly"
 
     # Clean up
-    rm -f "${BATS_TMPDIR}/wasm_cout_test.cpp" "${BATS_TMPDIR}/wasm_cout" test.c
+    rm -f "${BATS_TMPDIR}/wasm_builtins_test.c" "${BATS_TMPDIR}/wasm_builtins_test"
 }
 
 # ===================== sanitizers
@@ -1011,10 +1030,6 @@ skip_if_arch() {
 
 # ===================== libfuzzer
 
-@test "Test libFuzzer presence" {
-    run test -f "/usr/lib/llvm-$VERSION/lib/libFuzzer.a"
-    assert_success
-}
 @test "Test libFuzzer compilation and execution across architectures" {
     if [[ "$DEB_HOST_ARCH" != "amd64" && "$DEB_HOST_ARCH" != "i386" ]]; then
         skip "Test not applicable on architectures other than amd64 or i386"
@@ -1038,12 +1053,10 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 EOF
 
     # Compile the test with libFuzzer
-    run clang-$VERSION -fsanitize=fuzzer "${BATS_TMPDIR}/test_fuzzer.cc" -o "${BATS_TMPDIR}/a.out" &> "${BATS_TMPDIR}/foo.log"
-
-    # Check for missing file errors in the log
-    if grep -q "No such file or directory" "${BATS_TMPDIR}/foo.log"; then
-        skip "Fuzzer compilation failed due to missing files or incorrect libraries"
-    fi
+    run clang-$VERSION -fsanitize=fuzzer "${BATS_TMPDIR}/test_fuzzer.cc" -o "${BATS_TMPDIR}/a.out"
+    # Don't skip when the compiler-rt fuzzer libraries are missing: that is
+    # the bug we want to catch here. See #1147573.
+    assert_success "Fuzzer compilation failed"
 
     run "${BATS_TMPDIR}/a.out"
     assert_output -e "(Test unit written|PreferSmall)"
@@ -1071,7 +1084,15 @@ EOF
     assert_failure
     assert_output -p "libFuzzer: deadly signal"
 
-    run clang++-$VERSION -fsanitize=address -fsanitize-coverage=edge,trace-pc "${BATS_TMPDIR}/fuzzer_test.cc" /usr/lib/llvm-$VERSION/lib/libFuzzer.a -o "${BATS_TMPDIR}/fuzzer_test_explicit"
+    # The hand-built libFuzzer.a is gone: the fuzzer runtime only comes from
+    # the compiler-rt resource directory now (libclang-rt-$VERSION-dev).
+    resource_dir=$(clang-$VERSION -print-resource-dir)
+    target_arch=$(clang-$VERSION -print-target-triple | cut -d- -f1)
+    fuzzer_lib="$resource_dir/lib/linux/libclang_rt.fuzzer-$target_arch.a"
+    run test -f "$fuzzer_lib"
+    assert_success "$fuzzer_lib is missing"
+
+    run clang++-$VERSION -fsanitize=address -fsanitize-coverage=edge,trace-pc "${BATS_TMPDIR}/fuzzer_test.cc" "$fuzzer_lib" -o "${BATS_TMPDIR}/fuzzer_test_explicit"
     assert_success "Fuzzer compilation with explicit linking failed"
     run "${BATS_TMPDIR}/fuzzer_test_explicit"
     assert_output -e "(Test unit written|PreferSmall)"
